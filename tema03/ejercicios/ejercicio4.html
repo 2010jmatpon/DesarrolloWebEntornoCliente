@@ -1,0 +1,34 @@
+/*
+4.En una gestoría te solicitan que crees una web para calcular las primas de las nóminas, estas funcionan según las siguientes reglas: 
+
+    4a.Si el empleado/a tiene un sueldo inferior a 750 € y su antigüedad es mayor o igual a 10 años, obtendrá una prima del 10% de su sueldo. 
+
+    4b.Si el empleado/a tiene sueldo superior o igual a 750 € y su antigüedad es mayor o igual a 10 años, obtendrá una prima del 5% de su sueldo.
+
+    4c.Si su antigüedad es menor a 10 años, no obtendrá ninguna prima. 
+
+Tras realizar la prima mensual, se deberá mostrar un mensaje con el valor final (sueldo + prima). Para adquirir sueldo y antigüedad, pregúntalo al usuario/a.
+*/
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+            function gestoria(){
+                var sueldo = Number (prompt("Introduce el sueldo"));
+                var antigüedad = Number (prompt("Introduce la antigüedad"));
+
+                if (sueldo < 750 && antigüedad >= 10){
+                    mensaje = "Su sueldo con prima es de " + (sueldo + ((sueldo * 10) / 100)) + "€"
+                    alert (mensaje);
+                } else if (sueldo >= 750 && antigüedad >= 10){
+                    mensaje2 = "Su sueldo con prima es de " + (sueldo + ((sueldo * 5) / 100)) + "€"
+                    alert (mensaje2)
+                } else {
+                    alert ("No recibe prima")
+                }
+            }
+        </script>
+    </head>
+    <body onload="gestoria();"></body>
+</html>
