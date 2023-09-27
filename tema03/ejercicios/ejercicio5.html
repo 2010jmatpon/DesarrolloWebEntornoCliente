@@ -1,0 +1,37 @@
+// 5.Crea una web que solicite tres números y los muestre de menor a mayor.
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+            function menorMayor(){
+                var n1 = Number (prompt("Introduce un número"));
+                var n2 = Number (prompt("Introduce otro número"));
+                var n3 = Number (prompt("Introduce un último número"));
+
+
+                if (n1 < n2 && n2 < n3){
+                    mensaje = "El orden de los números de menor a mayor es: " + n1 + "<" + n2 + "<" + n3
+                    alert (mensaje);
+                } else if (n2 < n1 && n1 < n3){
+                    mensaje2 = "El orden de los números de menor a mayor es: " + n2 + "<" + n1 + "<" + n3
+                    alert (mensaje2)
+                } else if (n3 < n1 && n1 < n2){
+                    mensaje3 = "El orden de los números de menor a mayor es: " + n3 + "<" + n1 + "<" + n2
+                    alert (mensaje3)
+                } else if (n1 < n3 && n3 < n2){
+                    mensaje4 = "El orden de los números de menor a mayor es: " + n1 + "<" + n3 + "<" + n2
+                    alert (mensaje4)
+                }else if (n2 < n3 && n3 < n1){
+                    mensaje5 = "El orden de los números de menor a mayor es: " + n2 + "<" + n3 + "<" + n1
+                    alert (mensaje5)
+                }else if (n3 < n2 && n2 < n1){
+                    mensaje6 = "El orden de los números de menor a mayor es: " + n3 + "<" + n2 + "<" + n1
+                    alert (mensaje6)
+                }else {
+                    alert ("Hay números repetidos")
+                }
+            }
+        </script>
+    </head>
+    <body onload="menorMayor();"></body>
+</html>
