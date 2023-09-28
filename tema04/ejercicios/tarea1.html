@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      switch (n1) {
+        case 1:
+          alert("valor 1");
+          break;
+        case 2:
+          alert("valor 2");
+          break;
+        case 3:
+          alert("valor 3");
+          break;
+        default:
+          alert("defecto");
+          break;
+      }
+      function menu (){
+        var n1 = Number (prompt("1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"));
+        if (n1 > 5 || n1 == 0){
+            alert ("ERROR. Introduzca un número entre 1 y 5");
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

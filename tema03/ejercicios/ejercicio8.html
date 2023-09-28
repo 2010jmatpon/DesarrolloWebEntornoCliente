@@ -5,15 +5,25 @@
         <meta charset="UTF-8">
         <script>
             function numerosPrimos(){
+                var primoInicial = 2; //Comienza por el número primo 2
+                var res = ""; //Guarda expresión de factores
                 var a = Number (prompt("Introduce un número"));
+                var aInicial = a; //Almacena valor inicial para recuperarlo
                 var mensaje;
                 
-                if (a == "") {
-                    mensaje = "Has cancelado o no has introducido ningún número";
-                } else if (a == 0 || a == 1){
-                    mensaje = "La descomposición en números primos es: 1";
+                while(a != 1){
+                    if ((a % primoInicial == 0)){ //Comprueba si es divisible
+                        if ((a/primoInicial) != 1) { //Descarta que sea divisible entre si mismo
+                            res += primoInicial + " * "; //Añade asterisco si es necesario
+                        } else{
+                            res += primoInicial; //No necesita asterisco al ser el final
+                        }
+                        a = a / primoInicial;
+                    } else {
+                        primoInicial++;
+                    }
                 }
-                alert (mensaje);
+                alert ("Factores primos de " + aInicial + ": " + res);
             }
         </script>
     </head>
