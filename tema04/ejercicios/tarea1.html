@@ -3,27 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      switch (n1) {
-        case 1:
-          alert("valor 1");
-          break;
-        case 2:
-          alert("valor 2");
-          break;
-        case 3:
-          alert("valor 3");
-          break;
-        default:
-          alert("defecto");
-          break;
-      }
-      function menu (){
-        var n1 = Number (prompt("1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"));
-        if (n1 > 5 || n1 == 0){
-            alert ("ERROR. Introduzca un número entre 1 y 5");
+      function menu() {
+        var n1 = Number(
+          prompt(
+            "Elige una opción: \n 1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"
+          )
+        );
+        var figura;
+        switch (n1) {
+          case 1:
+            eleccionFigura();
+
+            break;
+          case 2:
+            valores(figura);
+            break;
+          case 3:
+            alert("valor 3");
+            break;
+          default:
+            alert("defecto");
+            break;
         }
       }
+
+      function eleccionFigura(n2) {
+        var n2 = Number(
+          prompt("Elegir entre: \n 1. Cubo \n 2. Esfera \n 3. Cilindro")
+        );
+        if (n2 == 1) {
+          n2 = 1;
+          menu();
+        } else if (n2 == 2) {
+          menu();
+        } else if (n2 == 3) {
+          menu();
+        } else {
+          alert("Error. Introduzca un número entre 1 y 3");
+        }
+      } 
+      function valores(figura) {
+    
+      }
+
+      function cuboArea() {}
     </script>
   </head>
-  <body></body>
+  <body onload="menu();"></body>
 </html>
