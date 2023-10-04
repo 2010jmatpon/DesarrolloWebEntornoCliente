@@ -4,49 +4,91 @@
     <meta charset="UTF-8" />
     <script>
       function menu() {
-        var n1 = Number(
-          prompt(
-            "Elige una opción: \n 1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"
-          )
-        );
-        var figura;
-        switch (n1) {
-          case 1:
-            eleccionFigura();
-
-            break;
-          case 2:
-            valores(figura);
-            break;
-          case 3:
-            alert("valor 3");
-            break;
-          default:
-            alert("defecto");
-            break;
+        while (n1 != 5) {
+          var n1 = Number(
+            prompt(
+              "Elige una opción: \n 1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"
+            )
+          );
+          var figura;
+          var valor1;
+          switch (n1) {
+            case 1:
+              figura = eleccionFigura();
+              break;
+            case 2:
+              valor1= valores(figura);
+              break;
+            case 3:
+              volumen(figura, valor1);
+              break;
+            case 4:
+              area(figura, valor1);
+              break;
+            case 5:
+             alert("Fin del Programa");
+              break;
+            default:
+              alert("Por favor introduzca un número del 1 al 5");
+              break;
+          }
         }
       }
 
-      function eleccionFigura(n2) {
+      function eleccionFigura() {
         var n2 = Number(
           prompt("Elegir entre: \n 1. Cubo \n 2. Esfera \n 3. Cilindro")
         );
-        if (n2 == 1) {
-          n2 = 1;
-          menu();
-        } else if (n2 == 2) {
-          menu();
-        } else if (n2 == 3) {
-          menu();
-        } else {
-          alert("Error. Introduzca un número entre 1 y 3");
-        }
-      } 
-      function valores(figura) {
-    
+        return n2;
       }
 
-      function cuboArea() {}
+      function valores(figura) {
+        if (figura == 1) {
+          var vCubo = Number(prompt("Introduzca lado del cubo (cm)"));
+          return vCubo;
+        } else if (figura == 2){
+          var vEsfera = Number(prompt("Introduzca radio de la esfera (cm)"));
+          return vEsfera;
+        } else if (figura == 3){
+          var hCilindro = Number(prompt("Introduzca altura del cilindro (cm)"));
+          var rCilindro = Number(prompt("Introduzca radio del cililndro (cm)"));
+          var vCilindro = [rCilindro, hCilindro];
+          return vCilindro;
+        } else{
+          alert ("ERROR. Por favor introduzcca un número del 1 al 3")
+        }
+      }
+
+      function volumen(figura, valor1) {
+        if (figura == 1) {
+          vol = Math.pow(valor1, 3);
+          alert("Volumen de la figura = " + vol + " cm3");
+        } else if (figura == 2){
+          vol = 4/3*Math.PI * Math.pow(valor1,3);
+          alert("Volumen de la figura = " + vol + " cm3");
+        } else if (figura == 3){
+          vol = Math.PI * Math.pow(valor1[0], 2) * valor1[1];
+          alert("Volumen de la figura = " + vol + " cm3");
+        } else{
+          alert ("ERROR. Por favor introduzcca un número del 1 al 3")
+        }
+      }
+
+      function area(figura, valor1) {
+        if (figura == 1) {
+          A = 6 * Math.pow(valor1, 2);
+          alert("Área de la figura = " + A + " cm2");
+        } else if (figura == 2){
+          A = 4*Math.PI * Math.pow(valor1,2);
+          alert("Área de la figura = " + A + " cm2");
+        } else if (figura == 3){
+          A = (2*Math.PI*valor1[0]*valor1[1])+(2*Math.PI*Math.pow(valor1[0],2))
+          alert("Área de la figura = " + A + " cm2");
+        } else{
+          alert ("ERROR. Por favor introduzcca un número del 1 al 3")
+        }
+      }
+
     </script>
   </head>
   <body onload="menu();"></body>
