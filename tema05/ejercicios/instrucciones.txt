@@ -1,0 +1,6 @@
+MODA
+1.- No hay MODA
+2.- Solamente se repite 1 número con respecto a los demás el cuál sería la MODA
+3.-Existen 2 modas
+    3.1.- Si existe algún valor entre ellos --> AMBOS SON LA MODA
+    3.2.- Si no existe ningún valor entre ellos --> LA MODA ES LA MEDIA DE AMBOS VALORES

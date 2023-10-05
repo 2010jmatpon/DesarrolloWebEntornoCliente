@@ -3,37 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      function menu() {
-        while (n1 != 5) {
-          var n1 = Number(
-            prompt(
-              "Elige una opción: \n 1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"
-            )
-          );
-          var figura;
-          var valor1;
-          switch (n1) {
-            case 1:
-              figura = eleccionFigura();
-              break;
-            case 2:
-              valor1= valores(figura);
-              break;
-            case 3:
-              volumen(figura, valor1);
-              break;
-            case 4:
-              area(figura, valor1);
-              break;
-            case 5:
-             alert("Fin del Programa");
-              break;
-            default:
-              alert("Por favor introduzca un número del 1 al 5");
-              break;
-          }
-        }
-      }
+
 
       function eleccionFigura() {
         var n2 = Number(
@@ -89,6 +59,38 @@
         }
       }
 
+      function menu() {
+        while (n1 != 5) {
+          var n1 = Number(
+            prompt(
+              "Elige una opción: \n 1.Elija entre cubo, esfera o cilíndro \n 2.Introduzca los valores de las variables \n 3.Cálculo de volumen \n 4.Cálculo de área \n 5.Finalizar"
+            )
+          );
+          var figura;
+          var valor1;
+          switch (n1) {
+            case 1:
+              figura = eleccionFigura();
+              //debugger;
+              break;
+            case 2:
+              valor1= valores(figura);
+              break;
+            case 3:
+              volumen(figura, valor1);
+              break;
+            case 4:
+              area(figura, valor1);
+              break;
+            case 5:
+             alert("Fin del Programa");
+              break;
+            default:
+              alert("Por favor introduzca un número del 1 al 5");
+              break;
+          }
+        }
+      }
     </script>
   </head>
   <body onload="menu();"></body>
