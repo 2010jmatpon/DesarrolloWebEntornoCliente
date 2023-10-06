@@ -5,18 +5,48 @@
     <script>
       function array() {
         var a = [];
-        
-        for (var i = 1; i <= a.length; i++) {
+        var exit = false;
+        while (exit == false) {
           var n = prompt("Introduce un numero");
-          a.push(n);
+          if (exit == false && n != "s") {
+            Number(n);
+            a.push(n);
+          }
+
+          if (n == "s") {
+            exit = true;
+            media(a);
+            rango(a);
+          }
         }
       }
 
-      function media() {}
+      function media(a) {
+        var suma = 0;
+        for (var i = 0; i < a.length; i++) {
+          suma = suma + Number(a[i]);
+        }
+        var media = 0;
+        media = suma / Number(a.length);
+        alert("La media es " + media);
+      }
 
-      function rango() {}
+      function rango(a) {
+        nMax = Number(a[0]);
+        nMin = Number(a[0]);
+        for (var i = 0; i < a.length; i++) {
+          if (nMax < Number(a[i])) {
+            nMax = Number(a[i]);
+          } else if (nMin > Number(a[i])) {
+            nMin = Number(a[i]);
+          }
+        }
+        var rango = 0;
+        rango = nMax - nMin;
+        alert("El rango es " + rango);
+      }
 
-      function moda() {}
+      function moda(a) {}
     </script>
   </head>
   <body onload="array();"></body>
