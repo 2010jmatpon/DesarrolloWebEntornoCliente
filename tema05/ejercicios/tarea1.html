@@ -8,6 +8,7 @@
         var exit = false;
         while (exit == false) {
           var n = prompt("Introduce un numero");
+          if (n == null) return; 
           if (exit == false && n != "s") {
             Number(n);
             a.push(n);
@@ -17,6 +18,7 @@
             exit = true;
             media(a);
             rango(a);
+            moda(a);
           }
         }
       }
@@ -46,7 +48,24 @@
         alert("El rango es " + rango);
       }
 
-      function moda(a) {}
+      function moda(a) {
+        var recuentoNum = {};
+        for (var i = 0; i < a.length; i++) {
+          var n = a[i];
+          recuentoNum[n] = (recuentoNum[n] || 0) + 1;
+        }
+
+        var moda = null;
+        var repeticion = 0;
+
+        for (var n in recuentoNum) {
+          if (recuentoNum[n] > repeticion) {
+            moda = parseFloat(n);
+            repeticion = recuentoNum[n];
+          }
+        }
+        alert("La moda es " + moda);
+      }
     </script>
   </head>
   <body onload="array();"></body>

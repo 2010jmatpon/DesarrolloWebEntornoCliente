@@ -4,3 +4,58 @@ MODA
 3.-Existen 2 modas
     3.1.- Si existe algún valor entre ellos --> AMBOS SON LA MODA
     3.2.- Si no existe ningún valor entre ellos --> LA MODA ES LA MEDIA DE AMBOS VALORES
+
+
+
+var max = 0;
+var modas="";
+var contarModa = 0;
+var existeDistindo = false;
+var enMedio = false;
+var b=[];
+var s =[];
+
+for (var i = 0 ; i < s.lenght; i ++)
+if ( b[s[i]] == undefined)
+{
+  b[s[i]]-i;
+} else{
+  b[s[i]]++;
+}
+
+for (var i = 0; i < s.length ; i++){
+  if  (b[s[i]] >=max) {
+    max =  b[s[i]];
+  }
+}
+
+for (var i = 0; i < s.length ; i++){
+if(b[s[i]] < max){
+  existeDistinto = true
+}
+}
+for (var i = 0; i < s.length ; i++){
+if (b[s[i]] == max &&existeDistinto = true){
+  modas +=" , " + s[i];
+  contarModa ++;
+  m[contarModa]=s[i];
+  b[s[i]]=0
+}
+}
+if (contarModa == 2){
+  for (var 1 = 0 ; i < s.length ; i++){
+    if((s[i] > m[1] && s[i] < m[2]) ||(s[i] < m[1] && s[i] > m[2])){
+      enMedio = true;
+    }
+  }
+ 
+} 
+if (enMedio==false&&contarmoda==2){
+    modas=" , " + (m[1]+m[2])/2;
+}
+
+if (modas != ""){
+  alert ("La moda es" + modas);
+} else {
+  alert ("No tiene moda");
+}
