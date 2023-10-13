@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      function array() {
+        var x = [];
+        var exit = false;
+        while (exit == false) {
+          var n = prompt("Introduce un numero");
+          if (n == null) return;
+          if (exit == false && n != "s") {
+            Number(n);
+            x.push(n);
+          }
+
+          if (n == "s") {
+            exit = true;
+            media(x);
+            rango(x);
+            moda(x);
+            mediana(x);
+          }
+        }
+      }
+
+      function media(x) {
+        var suma = 0;
+        for (var i = 0; i < x.length; i++) {
+          suma = suma + Number(x[i]);
+        }
+        var media = 0;
+        media = suma / Number(x.length);
+        alert("La media es " + media);
+      }
+
+      function rango(x) {
+        nMax = Number(x[0]);
+        nMin = Number(x[0]);
+        for (var i = 0; i < x.length; i++) {
+          if (nMax < Number(x[i])) {
+            nMax = Number(x[i]);
+          } else if (nMin > Number(x[i])) {
+            nMin = Number(x[i]);
+          }
+        }
+        var rango = 0;
+        rango = nMax - nMin;
+        alert("El rango es " + rango);
+      }
+
+      function moda(x) {
+        var recuentoNum = {};
+        for (var i = 0; i < x.length; i++) {
+          var n = x[i];
+          recuentoNum[n] = (recuentoNum[n] || 0) + 1;
+        }
+
+        var moda = null;
+        var repeticion = 0;
+
+        for (var n in recuentoNum) {
+          if (recuentoNum[n] > repeticion) {
+            moda = parseFloat(n);
+            repeticion = recuentoNum[n];
+          }
+        }
+        alert("La moda es " + moda);
+      }
+
+      function mediana(x){
+        x.sort(function (a,b){return a-b});
+        if(x.length % 2 == 0){
+            var centro;
+            centro = x.length / 2;
+
+            medianaBaja = centro -1;
+            medianaAlta = centro;
+            var mediaMediana = (medianaBaja + medianaAlta)/2;
+            var mediana = mediaMediana;
+
+        }
+        alert ("La mediana es " + mediana);
+    
+      }
+    </script>
+  </head>
+  <body onload="array();"></body>
+</html>
