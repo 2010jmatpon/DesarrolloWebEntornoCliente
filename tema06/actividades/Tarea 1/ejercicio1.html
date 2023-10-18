@@ -71,14 +71,18 @@
       function mediana(x){
         x.sort(function (a,b){return a-b});
         if(x.length % 2 == 0){
-            var centro;
-            centro = x.length / 2;
+          var centro;
+          centro = x.length / 2;
 
-            medianaBaja = centro -1;
-            medianaAlta = centro;
-            var mediaMediana = (medianaBaja + medianaAlta)/2;
-            var mediana = mediaMediana;
+          var medianaBaja = Number (x[(centro -1)]);
+          var medianaAlta = Number (x[(centro)]);
+          var mediaMediana = Number ((medianaBaja + medianaAlta)/2);
+          var mediana = Number (mediaMediana);
 
+        }
+        else{
+          var mitadMediana = Number (x[(x.length/2) - (1/2)]);
+          var mediana = Number (mitadMediana);
         }
         alert ("La mediana es " + mediana);
     
