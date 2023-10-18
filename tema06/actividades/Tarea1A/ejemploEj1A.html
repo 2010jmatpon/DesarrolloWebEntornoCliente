@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      function createArray() {
+        var filas = Number(prompt("Introduzca el número de filas:"));
+        var columnas = Number(prompt("Introduzca el número de columnas:"));
+        var arr = new Array(rows);
+        for (var i = 0; i < rows; i++) {
+          arr[i] = new Array(cols);
+          for (var j = 0; j < cols; j++) {
+            arr[i][j] = parseInt(
+              prompt("Ingrese el valor para [" + i + "][" + j + "]:")
+            );
+          }
+        }
+        return arr;
+      }
+
+      function separateArray(arr) {
+        var even = [];
+        var odd = [];
+        for (var i = 0; i < arr.length; i++) {
+          for (var j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] % 2 == 0) {
+              even.push(arr[i][j]);
+            } else {
+              odd.push(arr[i][j]);
+            }
+          }
+        }
+        alert(
+          "Números pares: " +
+            even.join(", ") +
+            "\nNúmeros impares: " +
+            odd.join(", ")
+        );
+      }
+
+      var myArray = createArray();
+      separateArray(myArray);
+    </script>
+  </head>
+  <body></body>
+</html>

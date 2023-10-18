@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      function array() {
+        var x = [];
+        var cont = 0;
+        var exit = false;
+        while (exit == false) {
+          var n = prompt("Introduce un numero");
+          if (n == null) return;
+          if (exit == false && n != "s") {
+            Number(n);
+            for (i = 0; i <= x.length; i++) {
+              x.push([]);
+              for (j = 0; j <= x.length; j++) {
+                x[i].push(cont++);
+              }
+              alert(x[i]);
+            }
+          }
+          if (n == "s") {
+            exit = true;
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="array();"></body>
+</html>
