@@ -1,39 +1,39 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <script>
       function createArray() {
         var filas = Number(prompt("Introduzca el número de filas:"));
         var columnas = Number(prompt("Introduzca el número de columnas:"));
-        var arr = new Array(rows);
-        for (var i = 0; i < rows; i++) {
-          arr[i] = new Array(cols);
-          for (var j = 0; j < cols; j++) {
-            arr[i][j] = parseInt(
+        var x = new Array(filas);
+        for (var i = 0; i < filas; i++) {
+          x[i] = new Array(columnas);
+          for (var j = 0; j < columnas; j++) {
+            x[i][j] = Number(
               prompt("Ingrese el valor para [" + i + "][" + j + "]:")
             );
           }
         }
-        return arr;
+        return x;
       }
 
-      function separateArray(arr) {
-        var even = [];
-        var odd = [];
-        for (var i = 0; i < arr.length; i++) {
-          for (var j = 0; j < arr[i].length; j++) {
-            if (arr[i][j] % 2 == 0) {
-              even.push(arr[i][j]);
+      function separateArray(x) {
+        var par = [];
+        var impar = [];
+        for (var i = 0; i < x.length; i++) {
+          for (var j = 0; j < x[i].length; j++) {
+            if (x[i][j] % 2 == 0) {
+              par.push(x[i][j]);
             } else {
-              odd.push(arr[i][j]);
+              impar.push(x[i][j]);
             }
           }
         }
         alert(
           "Números pares: " +
-            even.join(", ") +
+            par.join(", ") +
             "\nNúmeros impares: " +
-            odd.join(", ")
+            impar.join(", ")
         );
       }
 
@@ -42,4 +42,4 @@
     </script>
   </head>
   <body></body>
-</html>
+</html> -->

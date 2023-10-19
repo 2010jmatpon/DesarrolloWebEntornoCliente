@@ -2,29 +2,52 @@
 <html lang="en">
   <head>
     <script>
-      function array() {
-        var x = [];
-        var cont = 0;
-        var exit = false;
-        while (exit == false) {
-          var n = prompt("Introduce un numero");
-          if (n == null) return;
-          if (exit == false && n != "s") {
-            Number(n);
-            for (i = 0; i <= x.length; i++) {
-              x.push([]);
-              for (j = 0; j <= x.length; j++) {
-                x[i].push(cont++);
-              }
-              alert(x[i]);
+      function datos (){
+        var valor="";
+        var matriz = [];
+        var fila= 0;
+        matriz.push([]);
+      
+        do{
+          if (valor == null) return;
+          valor=prompt("Por favor, inserte sus datos \n Inserte c para cambiar de linea \n Inserte f para finalizar la introduccion de datos");
+          if (valor =='c' && valor!='f'){
+            fila++;
+            matriz.push([]);
+          }
+          if (valor != 'c' && valor !='f' && (isNaN(valor)==false)){
+            matriz[fila].push(Number(valor));
+          } 
+          if (valor != 'c' && valor !='f' && (isNaN(valor)==true)) {
+            alert ("inserte solo valore numericos");
+          }
+          
+        } while (valor !='f');
+        console.log(matriz);
+        parImpar(matriz)
+      }
+      
+      function parImpar(x){
+        var par = [];
+        var impar = [];
+        for (var i = 0; i < x.length; i++) {
+          for (var j = 0; j < x[i].length; j++) {
+            if (x[i][j] % 2 == 0) {
+              par.push(x[i][j]);
+            } else {
+              impar.push(x[i][j]);
             }
           }
-          if (n == "s") {
-            exit = true;
-          }
         }
+        alert(
+          "Numeros pares: " +
+            par.join(", ") +
+            "\nNumeros impares: " +
+            impar.join(", ")
+        );
       }
-    </script>
+      </script>
+      
   </head>
-  <body onload="array();"></body>
+  <body onload="datos();"></body>
 </html>
