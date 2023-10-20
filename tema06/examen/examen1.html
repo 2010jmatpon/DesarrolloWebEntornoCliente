@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examen1 - (1º Evaluación)</title>
+    <script>
+      function datos() {
+        var valor = "";
+        var matriz = [];
+        var fila = 0;
+        matriz.push([]);
+
+        do {
+            //Si pulsamos cancelar se cancelará el programa
+          if (valor == null) return;
+          //Prompt para introducir valores
+          valor = prompt(
+            "Por favor introduzca los valores de los consumos en kWh \n 1. Para cambiar de dependencia pulse la tecla 'c' \n 2. Para finalizar la introducción de datos pulse la tecla 'f'"
+          );
+          //Si el valor introducido es c cambiará la fila del array
+          if (valor == "c" && valor != "f") {
+            fila++;
+            matriz.push([]);
+          }
+          if (valor != "c" && valor != "f" && isNaN(valor) == false) {
+            matriz[fila].push(Number(valor));
+          }
+          if (valor != "c" && valor != "f" && isNaN(valor) == true) {
+            alert("inserte solo valore numericos");
+          }
+        } while (valor != "f");
+        console.log(matriz);
+        consumoMax(matriz);
+        consumoMayor2(matriz);
+      }
+
+      function consumoMax(x) {
+        var max = [];
+        var mayor = 0;
+        //Realizo dos for para recorrer la matriz bidimensional
+        for (var i = 0; i < x.length; i++) {
+          for (var j = 0; j < x[i].length; j++) {
+            if (x[i][j] > mayor) {
+              mayor = x[i][j];
+              max.push(x[i][j]);
+            }
+          }
+          alert("Dependencia " + i + ": Valor máximo = " + mayor);
+        }
+      }
+
+      function consumoMayor2(x) {
+        var max = [];
+            //Realizo dos for para recorrer la matriz bidimensional
+        for (var i = 0; i < x.length; i++) {
+          for (var j = 0; j < x.length; j++) {
+            if (x[i][j] > 2) {
+              alert("La dependencia " + i + " supera los 2 kWh");
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="datos()"></body>
+</html>
