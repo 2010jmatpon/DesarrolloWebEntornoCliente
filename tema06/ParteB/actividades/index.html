@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <script>
       function menu() {
+        var cesta = [];
         while (n1 != 5) {
           var n1 = Number(
             prompt(
@@ -14,12 +15,17 @@
           var valor1;
           switch (n1) {
             case 1:
+              verCesta(cesta);
               break;
             case 2:
+              var articulo = [];
+              insertarArticulo(articulo, cesta);
+              meterEnCesta(articulo, cesta);
               break;
             case 3:
               break;
             case 4:
+              vaciarCesta(cesta);
               break;
             case 5:
               break;
@@ -30,16 +36,36 @@
         }
       }
 
-      function verCesta(){
-        alert 
+      function verCesta(cesta) {
+        var header = "Cod. Articulo Precio Cantidad Subtotal";
+        for (var i = 0; i < cesta.length; i++) {
+          for (var j = 0; j < cesta[i].length; j++){
+
+          }
+          
+        }
       }
 
-      function insertarArticulo(){
-
+      function insertarArticulo(articulo, cesta) {
+        var codigo = Number(cesta.length) + 1;
+        var art = prompt("Introduzca el articulo");
+        var precio = Number(prompt("Introduzca el precio del artículo"));
+        var cantidad = Number(prompt("Introduzca la cantidad de artículos"));
+        var subtotal = precio * cantidad;
+        articulo.push(codigo, art, precio, cantidad, subtotal);
+        return articulo;
       }
 
-      function vaciarCesta(){
+      function meterEnCesta(articulo, cesta) {
+        cesta.push(articulo);
+        return cesta;
+      }
 
+      function borrarArticulo() {}
+
+      function vaciarCesta(cesta) {
+        cesta.length = 0;
+        return cesta;
       }
     </script>
   </head>
