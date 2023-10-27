@@ -23,6 +23,7 @@
               meterEnCesta(articulo, cesta);
               break;
             case 3:
+              borrarArticulo(cesta);
               break;
             case 4:
               vaciarCesta(cesta);
@@ -40,7 +41,7 @@
         var header = "Cod. Articulo Precio Cantidad Subtotal";
         for (var i = 0; i < cesta.length; i++) {
           for (var j = 0; j < cesta[i].length; j++){
-
+            
           }
           
         }
@@ -61,7 +62,16 @@
         return cesta;
       }
 
-      function borrarArticulo() {}
+      function borrarArticulo(cesta) {
+        var codigoEliminar = prompt("¿Cual es el codigo del producto que desea eliminar?");
+        for (var i = 0; i < cesta.length; i++){
+          if(cesta[i][0] === codigoEliminar){
+            cesta[i][0] = 0;
+            cesta[i][4] = 0
+          }
+        }
+
+      }
 
       function vaciarCesta(cesta) {
         cesta.length = 0;
