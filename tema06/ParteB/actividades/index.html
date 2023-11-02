@@ -5,6 +5,7 @@
     <script>
       function menu() {
         var cesta = [];
+        var articulo = {};
         while (n1 != 5) {
           var n1 = Number(
             prompt(
@@ -18,9 +19,7 @@
               verCesta(cesta);
               break;
             case 2:
-              var articulo = [];
               insertarArticulo(articulo, cesta);
-              meterEnCesta(articulo, cesta);
               break;
             case 3:
               borrarArticulo(cesta);
@@ -29,7 +28,7 @@
               vaciarCesta(cesta);
               break;
             case 5:
-              break;
+              return;
             default:
               alert("Por favor introduzca un número del 1 al 5");
               break;
@@ -38,23 +37,35 @@
       }
 
       function verCesta(cesta) {
-        var header = "Cod. Articulo Precio Cantidad Subtotal";
+        var total = 0;
+        var subtotal = 0;
+        var header = "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
         for (var i = 0; i < cesta.length; i++) {
-          for (var j = 0; j < cesta[i].length; j++){
-            
-          }
+            if (cesta[i].codigo == 0) {
+                subtotal = 0;
+            } else {
+               header =
+                header +
+                [cesta[i].codigo + "              "] +
+                [cesta[i].art + "             "] +
+                [cesta[i].precio + "                "] +
+                [cesta[i].cantidad + "                 "] +
+                [subtotal = (cesta[i].precio * cesta[i].cantidad ) ]+ "\n";
+            }
           
+          total = total + subtotal;
         }
+        alert(header + '\n -------------------------------------------------- \n              TOTAL: '+ total);
       }
 
       function insertarArticulo(articulo, cesta) {
-        var codigo = Number(cesta.length) + 1;
-        var art = prompt("Introduzca el articulo");
-        var precio = Number(prompt("Introduzca el precio del artículo"));
-        var cantidad = Number(prompt("Introduzca la cantidad de artículos"));
-        var subtotal = precio * cantidad;
-        articulo.push(codigo, art, precio, cantidad, subtotal);
-        return articulo;
+        var articulo = {
+          codigo: Number(cesta.length) + 1,
+          art: prompt("Introduzca el articulo"),
+          precio: Number(prompt("Introduzca el precio del artículo")),
+          cantidad: Number(prompt("Introduzca la cantidad de artículos")),
+        };
+        meterEnCesta(articulo, cesta);
       }
 
       function meterEnCesta(articulo, cesta) {
@@ -63,14 +74,14 @@
       }
 
       function borrarArticulo(cesta) {
-        var codigoEliminar = prompt("¿Cual es el codigo del producto que desea eliminar?");
-        for (var i = 0; i < cesta.length; i++){
-          if(cesta[i][0] === codigoEliminar){
-            cesta[i][0] = 0;
-            cesta[i][4] = 0
+        var codigoEliminar = Number(prompt(
+          "¿Cual es el codigo del producto que desea eliminar?"
+        ));
+        for (var i = 0; i < cesta.length; i++) {
+          if (cesta[i].codigo === codigoEliminar) {
+            cesta[i].codigo = 0;
           }
         }
-
       }
 
       function vaciarCesta(cesta) {
