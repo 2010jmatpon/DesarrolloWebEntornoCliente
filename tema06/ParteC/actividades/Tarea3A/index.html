@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      function clases(){
+        class Empleado {
+        #edad;
+        constructor (nombre, apellido, edad){
+          this.nombre = nombre;
+          this.apellido = apellido;
+          this.#edad = edad;
+          // this.nombreApellido = function() {return this.nombre + " " + this.apellido}
+        }
+
+        mostrar () {return this.nombre + " " + this.apellido + " con " + this.#edad + " años"}
+      }
+
+      class Profesor extends Empleado {
+        constructor(nombre, apellido, edad, cargo){
+          super(nombre, apellido, edad)
+          this.cargo = cargo;
+        }
+        muestraCargo () {return "es " + this.cargo}
+      }
+
+      var profesor1 = new Profesor ("Francisco", "Alarcon", 29, "Director");
+      alert(profesor1.mostrar() + " " + profesor1.muestraCargo());
+      }
+      
+    </script>
+  </head>
+  <body onload="clases();"></body>
+
+  
+</html>
+
