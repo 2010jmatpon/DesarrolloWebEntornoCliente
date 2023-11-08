@@ -3,87 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      function menu() {
-        var cesta = [];
-
-        while (n1 != 5) {
-          var n1 = Number(
-            prompt(
-              "Elige una opción: \n 1.Ver cesta \n 2.Insertar un artículo \n 3.Borrar un artículo \n 4.Vaciar cesta \n 5.Salir"
-            )
-          );
-          var figura;
-          var valor1;
-          switch (n1) {
-            case 1:
-              verCesta(cesta);
-              break;
-            case 2:
-              insertarArticulo(cesta);
-              break;
-            case 3:
-              borrarArticulo(cesta);
-              break;
-            case 4:
-              vaciarCesta(cesta);
-              break;
-            case 5:
-              return;
-            default:
-              alert("Por favor introduzca un número del 1 al 5");
-              break;
-          }
+      class Articulo {
+        #art;
+        constructor(codi, nombre, precio, cantidad) {
+          this.#art.codigo = codi;
+          this.#art.nombre = nombre;
+          this.#art.precio = precio;
+          this.#art.cantidad = cantidad;
+          return this.#art;
         }
       }
 
-      function verCesta(cesta) {
-        var total = 0;
-        var subtotal = 0;
-        var header = "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
-        for (var i = 0; i < cesta.length; i++) {
-            if (cesta[i].codigo == 0) {
-                subtotal = 0;
+      class Cesta {
+        #cod = 0;
+        #articulos = [];
+
+        añadirArticulo() {
+          this.#cod++;
+          var codigo = this.#cod ;
+          var nombre = prompt("Introduzca el articulo");
+          var precio = Number(prompt("Introduzca el precio del artículo"));
+          var cantidad = Number(prompt("Introduzca la cantidad de artículos"));
+          var art = new Articulo(codigo, nombre, precio, cantidad);
+          this.#articulos.push(art);
+        }
+
+        verCesta() {
+          var total = 0;
+          var subtotal = 0;
+          var header =
+            "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
+          for (var i = 0; i < articulos.length; i++) {
+            if (articulos[i].codigo == 0) {
+              subtotal = 0;
             } else {
-               header =
-                header +
-                [cesta[i].codigo + "              "] +
-                [cesta[i].art + "             "] +
-                [cesta[i].precio + "                "] +
-                [cesta[i].cantidad + "                 "] +
-                [subtotal = (cesta[i].precio * cesta[i].cantidad ) ]+ "\n";
+              header =
+                [articulos[i].codigo + "              "] +
+                [articulos[i].nombre + "             "] +
+                [articulos[i].precio + "                "] +
+                [articulos[i].cantidad + "                 "] +
+                [(subtotal = articulos[i].precio * articulos[i].cantidad)] +
+                "\n";
             }
-          
-          total = total + subtotal;
+            total = total + subtotal;
+          }
+          alert(
+            header +
+              "\n -------------------------------------------------- \n              TOTAL: " +
+              total
+          );
         }
-        alert(header + '\n -------------------------------------------------- \n              TOTAL: '+ total);
-      }
 
-      function insertarArticulo(cesta) {
-        var articulo = {
-          codigo: Number(cesta.length) + 1,
-          art: prompt("Introduzca el articulo"),
-          precio: Number(prompt("Introduzca el precio del artículo")),
-          cantidad: Number(prompt("Introduzca la cantidad de artículos")),
-        };
-       cesta.push(articulo);
-      }
+        borrarArticulo() {}
 
-      function borrarArticulo(cesta) {
-        var codigoEliminar = Number(prompt(
-          "¿Cual es el codigo del producto que desea eliminar?"
-        ));
-        for (var i = 0; i < cesta.length; i++) {
-          if (cesta[i].codigo === codigoEliminar) {
-            cesta[i].codigo = 0;
+        vaciarCesta() {
+          this.#articulos.length = 0;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+        menu() {
+          while (n1 != 5) {
+            var n1 = Number(
+              prompt(
+                "Elige una opción: \n 1.Ver cesta \n 2.Insertar un artículo \n 3.Borrar un artículo \n 4.Vaciar cesta \n 5.Salir"
+              )
+            );
+
+            switch (n1) {
+              case 1:
+                this.verCesta();
+                break;
+              case 2:
+                this.añadirArticulo();
+                break;
+              case 3:
+                this.borrarArticulo();
+                break;
+              case 4:
+                this.vaciarCesta();
+                break;
+              case 5:
+                return;
+              default:
+                alert("Por favor introduzca un número del 1 al 5");
+                break;
+            }
           }
         }
       }
+      var cesta = new Cesta();
+      cesta.menu();
+      
+      // function verCesta(cesta) {
+      //   var total = 0;
+      //   var subtotal = 0;
+      //   var header =
+      //     "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
+      //   for (var i = 0; i < cesta.length; i++) {
+      //     if (cesta[i].codigo == 0) {
+      //       subtotal = 0;
+      //     } else {
+      //       header =
+      //         header +
+      //         [cesta[i].codigo + "              "] +
+      //         [cesta[i].art + "             "] +
+      //         [cesta[i].precio + "                "] +
+      //         [cesta[i].cantidad + "                 "] +
+      //         [(subtotal = cesta[i].precio * cesta[i].cantidad)] +
+      //         "\n";
+      //     }
 
-      function vaciarCesta(cesta) {
-        cesta.length = 0;
-        return cesta;
-      }
+      //     total = total + subtotal;
+      //   }
+      //   alert(
+      //     header +
+      //       "\n -------------------------------------------------- \n              TOTAL: " +
+      //       total
+      //   );
+      // }
+
+      // function insertarArticulo(cesta) {
+      //   var articulo = {
+      //     codigo: Number(cesta.length) + 1,
+      //     art: prompt("Introduzca el articulo"),
+      //     precio: Number(prompt("Introduzca el precio del artículo")),
+      //     cantidad: Number(prompt("Introduzca la cantidad de artículos")),
+      //   };
+      //   cesta.push(articulo);
+      // }
+
+      // function borrarArticulo(cesta) {
+      //   var codigoEliminar = Number(
+      //     prompt("¿Cual es el codigo del producto que desea eliminar?")
+      //   );
+      //   for (var i = 0; i < cesta.length; i++) {
+      //     if (cesta[i].codigo === codigoEliminar) {
+      //       cesta[i].codigo = 0;
+      //     }
+      //   }
+      // }
+
+      // function vaciarCesta(cesta) {
+      //   cesta.length = 0;
+      //   return cesta;
+      // }
     </script>
   </head>
-  <body onload="menu();"></body>
+  <body ></body>
 </html>
