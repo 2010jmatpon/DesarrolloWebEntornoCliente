@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <!-- css bootstrap 532 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Baja de Vehiculos</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
-    />
+    /> 
+    
 
     <style type="text/css">
       input:invalid {
@@ -18,186 +20,204 @@
         border: 1px solid green;
       }
     </style>
-
+   
     <script>
       class Vehiculo {
-        constructor() {
-          window.onload = this.fEvento.bind(this);
+        #modificaDNI() {
+          var modDni = (document.getElementById("textoDNI").innerHTML =
+            "Escribiendo DNI....");
         }
 
-        #validaMatricula() {
-          
-          
+        #resetDNI() {
+          var texDni = (document.getElementById("textoDNI").innerHTML =
+            "DNI:");
         }
 
-        #validaEmail() {
-          var email = document.getElementById("idEmail");
-          if (email.validity.typeMismatch) {
-            email.setCustomValidity("¡Correo erróneo!");
+        #validarMatricula() {
+          var matric = document.getElementById("matricula");
+          if (matric.validity.patternMismatch) {
+            matric.setCustomValidity(
+              "Por favor, introduzca una matrícula formada por 4 números y 3 letras mayúsculas"
+            );
           } else {
-            email.setCustomValidity("");
+            matric.setCustomValidity("");
           }
         }
 
-        fEvento (){
-            var email = document.getElementById("idEmail");
-            email.addEventListener("keyup", this.#validaEmail.bind(this))
-        }
-        cambiarTextoDNI() {
-          var dni = document
-            .getElementById("idDni")
-            .innerHTML("Escribiendo DNI...");
+        #validaDNI() {
+          var dni = document.getElementById("DNI");
+          if (dni.validity.patternMismatch) {
+            dni.setCustomValidity(
+                "Por favor, introduzca un DNI formada por 8 números y 1 letra mayúsculas"
+            );
+          } else {
+            dni.setCustomValidity("");
+          }
         }
 
-        EventoCambiarTextoDNI() {
-          var dni = document.getElementById("idDni");
-          dni.addEventListener("submit", cambiarTextoDNI);
+        fEvento() {
+          var matric = document.getElementById("matricula");
+          matric.addEventListener("keyup", this.#validarMatricula.bind(this));
+
+          var texDni = document.getElementById("DNI");
+          texDni.addEventListener("focus", this.#modificaDNI.bind(this));
+          texDni.addEventListener("blur", this.#resetDNI.bind(this));
+
+          var dni = document.getElementById("DNI");
+          dni.addEventListener("keyup", this.#validaDNI.bind(this));
         }
+      }
+      
+
+       var eventos = new Vehiculo();
+       window.onload = function() {
+        eventos.fEvento();
       }
     </script>
   </head>
   <body>
-    <form class="was-validated" id="form1">
+    <form id="form1" method="GET" class="was-validated">
       <div class="container text-left">
         <h1>Solicitud de baja de vehículos</h1>
         <br />
-        <div class="row align-items-start" id="datosVehiculo">
-          <br />
+        <div class="row align-items-start">
           <h3>Datos del vehículo:</h3>
           <div class="col">
-            <label>Matrícula</label>
+            <label class="form-label">Matrícula:</label>
             <input
               type="text"
-              class="form-control"
               id="matricula"
               name="matricula"
+              class="form-control"
               pattern="^[0-9]{4}[A-Z]{3}$"
               required
             />
           </div>
+
           <div class="col">
-            <label>Fecha matriculación:</label>
+            <label class="form-label">Fecha Matriculación:</label>
             <input
               type="date"
+              name="fechaMatric"
               class="form-control"
-              id="fechaMatriculacion"
-              name="fechaMatriculacion"
               required
-            /><br /><br />
+            />
           </div>
 
           <div class="col-sm-6">
-            <label>6 últimos dígitos (nº bastidor):</label>
+            <label class="form-label">6 últimos dígitos (nº bastidor):</label>
             <input
               type="text"
+              name="numBastidor"
               class="form-control"
-              id="digitosBastidor"
-              name="digitosBastidor"
-              pattern="^[0-9]{6}$"
+              size="6"
+              maxlength="6"
+              pattern="[0-9]{6}"
               required
-            /><br /><br />
+            />
           </div>
+
         </div>
 
-        <div class="row align-items-start" id="datosTitular">
-          <h3>Datos del vehículo:</h3>
+        <br />
+
+        <div class="row align-items-start">
+          <h3>Datos del titular:</h3>
           <div class="col">
-            <label>Nombre: </label>
-            <input
-              type="text"
-              class="form-control"
-              id="nTitular"
-              name="nombreTitular"
-              required
-            /><br /><br />
+            <label class="form-label">Nombre:</label>
+            <input 
+              type="text" 
+              name="nombre" 
+              class="form-control" 
+              required />
           </div>
+
           <div class="col">
-            <label>Apellidos: </label>
-            <input
-              type="text"
-              class="form-control"
-              id="id"
-              name="apellidos"
-              required
-            /><br /><br />
+            <label class="form-label">Apellidos:</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              name="apellidos" 
+              required />
           </div>
+
           <div class="col-sm-6">
-            <label>Domicilio: </label>
+            <label class="form-label">Domicilio:</label>
+            <input 
+              type="text" 
+              name="domicilio" 
+              class="form-control"
+              required />
+          </div>
+
+        </div>
+
+        <br />
+
+        <div class="row align-items-start">
+          <div class="col">
+            <label class="form-label" id="textoDNI">DNI:</label>
             <input
               type="text"
               class="form-control"
-              id="domicilio"
-              name="domicilio"
+              pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$"
+              size="9"
+              maxlength="9"
+              id="DNI"
+              name="dni"
               required
-            /><br /><br />
+            />
           </div>
-          <div>
-            <div class="row align-items-start" id="datosTitular">
-              <div class="col">
-                <label>DNI</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="idDni"
-                  name="dni"
-                  pattern="^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$"
-                  required
-                /><br /><br />
-              </div>
 
-              <div class="col">
-                <label>Correo Electrónico:</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="idEmail"
-                  name="email"
-                  required
-                /><br /><br />
-              </div>
+          <div class="col">
+            <label class="form-label">Correo electrónico:</label>
+            <input 
+              type="email" 
+              class="form-control" 
+              name="mail" 
+              required />
+          </div>
 
-              <div class="col">
-                <label>Tlf:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="idTelefonoTitular"
-                  name="telefonoTitular"
-                  pattern="^[0-9]{9}"
-                  required
-                /><br /><br />
-              </div>
+          <div class="col">
+            <label class="form-label">Tlf:</label>
+            <input
+              type="text"
+              name="telefono"
+              class="form-control"
+              size="9"
+              maxlength="9"
+              pattern="[0-9]{9}"
+              required
+            />
+          </div>
 
-              <div class="col" id="idCheck">
-                <label id="tipoBaja">Tipo de baja: </label>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="check"
-                    id="idcheckTemporal"
-                    required
-                  />
-                  <label class="form-check-label"> Temporal </label>
-                </div>
-
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="check"
-                    id="idcheckDefinitiva"
-                    required
-                  />
-                  <label class="form-check-label"> Definitiva </label>
-                </div>
-              </div>
+          <div class="col">
+            <label class="form-label">Tipo de baja:</label>
+            <div class="form-check">
+              <label class="form-check-label"> Temporal </label>
+              <input
+                class="form-check-input"
+                type="radio"
+                name="baja"
+                required
+              />
             </div>
+
+            <div class="form-check">
+              <label class="form-check-label"> Definitiva </label>
+              <input
+                class="form-check-input"
+                type="radio"
+                name="baja"
+                required
+              />
+            </div>
+
           </div>
         </div>
-        <button type="button" class="btn btn-primary" id="bot">Enviar</button>
+        <br />
+        <button type="submit" class="btn btn-primary">Enviar</button>
       </div>
     </form>
   </body>
 </html>
-
