@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cesta</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+    <style>
+        body{
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+        }
+    </style>
+    <script>
+      class Articulo {
+        constructor() {
+          var productos = [
+            [1, "bolso", 20, "https://source.unsplash.com/random/500x500/?bag"],
+            [
+              2,
+              "zapatos",
+              20,
+              "https://source.unsplash.com/random/500x500/?shoe",
+            ],
+            [
+              3,
+              "móvil",
+              20,
+              "https://source.unsplash.com/random/500x500/?phone",
+            ],
+            [
+              4,
+              "pastel",
+              20,
+              "https://source.unsplash.com/random/500x500/?cake",
+            ],
+            [
+              5,
+              "lápiz",
+              20,
+              "https://source.unsplash.com/random/500x500/?pencil",
+            ],
+            [
+              6,
+              "sudadera",
+              20,
+              "https://source.unsplash.com/random/500x500/?hoodie",
+            ],
+          ];
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="pb-3 mb-4 border-bottom" style="grid-column: 2/11;">
+      <i class="bi bi-cart3" style="font-size: 3rem; color: orangered"></i>
+      <span class="fs-4"> Tienda On-Line</span>
+    </header>
+    <br>
+    <main>
+      <div style="grid-column: 2/7;">
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal-sm">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+      </div>
+      <div>
+        <table>
+          <tr>
+            <th>Cod.</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio(€)</th>
+            <th>Subtotal</th>
+          </tr>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>

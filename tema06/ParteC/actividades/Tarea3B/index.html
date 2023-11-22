@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <script>
       class Articulo {
-        #art;
+        #art = {};
         constructor(codi, nombre, precio, cantidad) {
           this.#art.codigo = codi;
           this.#art.nombre = nombre;
           this.#art.precio = precio;
           this.#art.cantidad = cantidad;
+          this.#art.subtotal = precio * cantidad;
           return this.#art;
         }
       }
@@ -20,7 +21,7 @@
 
         añadirArticulo() {
           this.#cod++;
-          var codigo = this.#cod ;
+          var codigo = this.#cod;
           var nombre = prompt("Introduzca el articulo");
           var precio = Number(prompt("Introduzca el precio del artículo"));
           var cantidad = Number(prompt("Introduzca la cantidad de artículos"));
@@ -28,24 +29,28 @@
           this.#articulos.push(art);
         }
 
-        verCesta() {
+        #verCesta() {
           var total = 0;
           var subtotal = 0;
           var header =
             "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
-          for (var i = 0; i < articulos.length; i++) {
-            if (articulos[i].codigo == 0) {
+          for (var i = 0; i < this.#articulos.length; i++) {
+            if (this.#articulos[i].codigo == 0) {
               subtotal = 0;
             } else {
-              header =
-                [articulos[i].codigo + "              "] +
-                [articulos[i].nombre + "             "] +
-                [articulos[i].precio + "                "] +
-                [articulos[i].cantidad + "                 "] +
-                [(subtotal = articulos[i].precio * articulos[i].cantidad)] +
+              header +=
+                this.#articulos[i].codigo +
+                "              " +
+                this.#articulos[i].nombre +
+                "             " +
+                this.#articulos[i].precio +
+                "                " +
+                this.#articulos[i].cantidad +
+                "                 " +
+                this.#articulos[i].subtotal +
                 "\n";
             }
-            total = total + subtotal;
+            total += this.#articulos[i].subtotal;
           }
           alert(
             header +
@@ -54,15 +59,22 @@
           );
         }
 
-        borrarArticulo() {}
+        borrarArticulo() {
+          var codigoEliminar = Number(
+            prompt("¿Cual es el codigo del producto que desea eliminar?")
+          );
+          for (var i = 0; i < this.#articulos.length; i++) {
+            if (this.#articulos[i].codigo === codigoEliminar) {
+              this.#articulos[i].codigo = 0;
+              this.#articulos[i].subtotal = 0;
+            }
+          }
+        }
 
         vaciarCesta() {
           this.#articulos.length = 0;
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////
 
         menu() {
           while (n1 != 5) {
@@ -74,7 +86,7 @@
 
             switch (n1) {
               case 1:
-                this.verCesta();
+                this.#verCesta();
                 break;
               case 2:
                 this.añadirArticulo();
@@ -96,61 +108,9 @@
       }
       var cesta = new Cesta();
       cesta.menu();
-      
-      // function verCesta(cesta) {
-      //   var total = 0;
-      //   var subtotal = 0;
-      //   var header =
-      //     "Cod.     Articulo    Precio    Cantidad    Subtotal \n -------------------------------------------------- \n";
-      //   for (var i = 0; i < cesta.length; i++) {
-      //     if (cesta[i].codigo == 0) {
-      //       subtotal = 0;
-      //     } else {
-      //       header =
-      //         header +
-      //         [cesta[i].codigo + "              "] +
-      //         [cesta[i].art + "             "] +
-      //         [cesta[i].precio + "                "] +
-      //         [cesta[i].cantidad + "                 "] +
-      //         [(subtotal = cesta[i].precio * cesta[i].cantidad)] +
-      //         "\n";
-      //     }
 
-      //     total = total + subtotal;
-      //   }
-      //   alert(
-      //     header +
-      //       "\n -------------------------------------------------- \n              TOTAL: " +
-      //       total
-      //   );
-      // }
-
-      // function insertarArticulo(cesta) {
-      //   var articulo = {
-      //     codigo: Number(cesta.length) + 1,
-      //     art: prompt("Introduzca el articulo"),
-      //     precio: Number(prompt("Introduzca el precio del artículo")),
-      //     cantidad: Number(prompt("Introduzca la cantidad de artículos")),
-      //   };
-      //   cesta.push(articulo);
-      // }
-
-      // function borrarArticulo(cesta) {
-      //   var codigoEliminar = Number(
-      //     prompt("¿Cual es el codigo del producto que desea eliminar?")
-      //   );
-      //   for (var i = 0; i < cesta.length; i++) {
-      //     if (cesta[i].codigo === codigoEliminar) {
-      //       cesta[i].codigo = 0;
-      //     }
-      //   }
-      // }
-
-      // function vaciarCesta(cesta) {
-      //   cesta.length = 0;
-      //   return cesta;
-      // }
     </script>
   </head>
-  <body ></body>
+  <body></body>
 </html>
+
