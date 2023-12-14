@@ -15,13 +15,28 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
     />
     <style>
-      body {
+      /* body {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
+      } */
+
+      /* main {
+        grid-column: 2/12;
+      } */
+      .header {
+        padding: 50px;
+      }
+      .card-img {
+        width: 50%;
       }
 
-      main {
-        grid-column: 2/12;
+      .card-body {
+        border: 1px;
+        border-radius: 5px;
+      }
+
+      #col1 {
+        width: calc(30% - 1em);
       }
     </style>
     <script>
@@ -38,41 +53,124 @@
         }
       }
 
-      // class Cesta{
+      class Cesta {}
 
-      // }
+      class ContProductos {
+        #productosDisponibles;
 
-      // class ContProductos{
+        constructor(productos) {
+          this.#productosDisponibles = productos;
+          this.#mostrarProductos();
+        }
 
-      // }
+        #mostrarProductos() {
+          var tarjetas = document.getElementById("idContProductos");
+
+          for (var i = 0; i < productos.length; i++) {
+            var div1 = document.createElement("div");
+            var img = document.createElement("img");
+            var div2 = document.createElement("div");
+            var nomProducto = document.createElement("h4");
+            var precProducto = document.createElement("p");
+            var div3 = document.createElement("div");
+            var cantProducto = document.createElement("input");
+            var botonAdd = document.createElement("a");
+
+            tarjetas.className = "card";
+            div1.className = "card-body";
+            img.className = "card-img";
+            div2.className = "card-body";
+            nomProducto.className = "card-title";
+            precProducto.className = "card-precio";
+            div3.className = "card-input";
+            cantProducto.className = "class-cantidad";
+            botonAdd.className = "btn btn-primary";
+
+            // tarjetas.style = "position: relative; right: 0px;"
+            div1.style = "width: 18rem;";
+            div3.style = "padding: 5px;";
+
+            div3.appendChild(cantProducto);
+            div2.appendChild(nomProducto);
+            div2.appendChild(precProducto);
+            div2.appendChild(div3);
+            div2.appendChild(botonAdd);
+            div1.appendChild(img);
+            div1.appendChild(div2);
+            tarjetas.appendChild(div1);
+
+            img.src = productos[i].img;
+            nomProducto.innerText = productos[i].nombre;
+            precProducto.innerText = productos[i].precio + " €";
+            botonAdd.innerText = "Añadir";
+          }
+        }
+      }
+
       var productos = [
-        [1, "bolso", 20, "https://source.unsplash.com/random/500x500/?bag"],
-        [2, "zapatos", 20, "https://source.unsplash.com/random/500x500/?shoe"],
-        [3, "móvil", 20, "https://source.unsplash.com/random/500x500/?phone"],
-        [4, "pastel", 20, "https://source.unsplash.com/random/500x500/?cake"],
-        [5, "lápiz", 20, "https://source.unsplash.com/random/500x500/?pencil"],
-        [
-          6,
-          "sudadera",
-          20,
-          "https://source.unsplash.com/random/500x500/?hoodie",
-        ],
+        {
+          id: 1,
+          nombre: "Bolso",
+          precio: 120,
+          img: "https://source.unsplash.com/random/500x500/?bag",
+        },
+        {
+          id: 2,
+          nombre: "Zapatos",
+          precio: 59,
+          img: "https://source.unsplash.com/random/500x500/?shoe",
+        },
+        {
+          id: 3,
+          nombre: "Móvil",
+          precio: 260,
+          img: "https://source.unsplash.com/random/500x500/?phone",
+        },
+        {
+          id: 4,
+          nombre: "Pastel",
+          precio: 18,
+          img: "https://source.unsplash.com/random/500x500/?cake",
+        },
+        {
+          id: 5,
+          nombre: "Lápiz",
+          precio: 2,
+          img: "https://source.unsplash.com/random/500x500/?pencil",
+        },
+        {
+          id: 6,
+          nombre: "Sudadera",
+          precio: 30,
+          img: "https://source.unsplash.com/random/500x500/?hoodie",
+        },
       ];
-      // window.onload = () => ContProductos(productos);
+
+      // var eventos = new ContProductos();
+      window.onload = () => new ContProductos(productos);
+      // var eventos = new Registrados();
+      // window.onload = function () {
+      //   eventos.fEvento();
+      // };
     </script>
   </head>
   <body>
     <main>
-      <hr />
-      <h1>
-        <i class="bi bi-cart3" style="color: orangered">Tienda On-Line</i>
-      </h1>
-      <hr />
-
+      <div class="header">
+        <br />
+        <h1>
+          <i class="bi bi-cart3" style="color: orangered">Tienda On-Line</i>
+        </h1>
+        <hr />
+      </div>
       <div class="container text-center">
         <div class="row">
-          <div class="col">1 of 2</div>
+          <div class="col" id="col1">
+            <div id="idContProductos"></div>
+          </div>
           <div class="col">
+            <h3><i class="bi bi-basket2-fill"></i>CESTA</h3>
+            <hr />
             <table class="table">
               <thead>
                 <tr>
