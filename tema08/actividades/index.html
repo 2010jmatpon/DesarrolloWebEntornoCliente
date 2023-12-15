@@ -53,7 +53,45 @@
         }
       }
 
-      class Cesta {}
+      class Cesta {
+        #cod = 0;
+        #articulos = [];
+
+        #productosDisponibles;
+        #idProducto;
+
+        constructor(productos, id) {
+          this.#productosDisponibles = productos;
+          this.#idProducto = id;
+          this.#verCesta();
+        }
+        #verCesta() {
+          var total = 0;
+          var subtotal = 0;
+          var lineasCesta = document.getElementById("table-body")
+          for (var i = 0; i < this.#productosDisponibles.length; i++) {
+            if (this.#productosDisponibles[i].id == 0) {
+              subtotal= 0;
+            } else if (this.#productosDisponibles[i].id == this.#idProducto) {
+              var tr1 = document.createElement("tr");
+              var tdCod = document.createElement("td");
+              var tdNom = document.createElement("td");
+              var tdCant = document.createElement("td");
+              var tdPre = document.createElement("td");
+              var tdSub = document.createElement("td");
+
+              tr1.className="tr-producto";
+              tdCod.className="tdCod";
+              tdNom.className="tdNom";
+              tdCant.className="tdCant";
+              tdPre.className="tdPre";
+              tdSub.className="tdSub";
+
+              
+            }
+          }
+        }
+      }
 
       class ContProductos {
         #productosDisponibles;
@@ -172,7 +210,7 @@
             <h3><i class="bi bi-basket2-fill"></i>CESTA</h3>
             <hr />
             <table class="table">
-              <thead>
+              <thead id="table-header">
                 <tr>
                   <th scope="col">Cod.</th>
                   <th scope="col">Nombre</th>
@@ -181,6 +219,9 @@
                   <th scope="col">Subtotal</th>
                 </tr>
               </thead>
+              <tbody id="table-body">
+
+              </tbody>
             </table>
           </div>
         </div>
