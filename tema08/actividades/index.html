@@ -18,9 +18,9 @@
       /* body {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
-      } */
+      }
 
-      /* main {
+      main {
         grid-column: 2/12;
       } */
       .header {
@@ -35,21 +35,23 @@
         border-radius: 5px;
       }
 
-      #col1 {
+      /* #col1 {
         width: calc(30% - 1em);
-      }
+      } */
     </style>
     <script>
       class Producto {
         #cod;
         #nombre;
+        #cantidad
         #precio;
         #imagen;
-        constructor(cod, nombre, precio, imagen) {
+        constructor(cod, nombre, precio, imagen, cantidad) {
           this.#cod = cod;
           this.#nombre = nombre;
           this.#precio = precio;
           this.#imagen = imagen;
+          this.#cantidad = cantidad;
         }
       }
 
@@ -68,10 +70,10 @@
         #verCesta() {
           var total = 0;
           var subtotal = 0;
-          var lineasCesta = document.getElementById("table-body")
+          var lineasCesta = document.getElementById("table-body");
           for (var i = 0; i < this.#productosDisponibles.length; i++) {
             if (this.#productosDisponibles[i].id == 0) {
-              subtotal= 0;
+              subtotal = 0;
             } else if (this.#productosDisponibles[i].id == this.#idProducto) {
               var tr1 = document.createElement("tr");
               var tdCod = document.createElement("td");
@@ -80,14 +82,12 @@
               var tdPre = document.createElement("td");
               var tdSub = document.createElement("td");
 
-              tr1.className="tr-producto";
-              tdCod.className="tdCod";
-              tdNom.className="tdNom";
-              tdCant.className="tdCant";
-              tdPre.className="tdPre";
-              tdSub.className="tdSub";
-
-              
+              tr1.className = "tr-producto";
+              tdCod.className = "tdCod";
+              tdNom.className = "tdNom";
+              tdCant.className = "tdCant";
+              tdPre.className = "tdPre";
+              tdSub.className = "tdSub";
             }
           }
         }
@@ -103,6 +103,10 @@
 
         #mostrarProductos() {
           var tarjetas = document.getElementById("idContProductos");
+          var divContenedor = document.createElement("div");
+          divContenedor.className = "card-group";
+          divContenedor.style =
+            "display: grid; grid-template-columns: 1fr 1fr 1fr";
 
           for (var i = 0; i < productos.length; i++) {
             var div1 = document.createElement("div");
@@ -128,6 +132,18 @@
             div1.style = "width: 18rem;";
             div3.style = "padding: 5px;";
 
+            if (i == 1) {
+              tarjetas.style = "grid-column: 2";
+            } else if (i == 2) {
+              tarjetas.style = "grid-column: 3";
+            } else if (i == 3) {
+              tarjetas.style = "grid-column: 1/2";
+            } else if (i == 4) {
+              tarjetas.style = "grid-column: 2/3";
+            } else if (i == 5) {
+              tarjetas.style = "grid-column: 3/4";
+            }
+
             div3.appendChild(cantProducto);
             div2.appendChild(nomProducto);
             div2.appendChild(precProducto);
@@ -135,12 +151,20 @@
             div2.appendChild(botonAdd);
             div1.appendChild(img);
             div1.appendChild(div2);
-            tarjetas.appendChild(div1);
+            
+            divContenedor.appendChild(div1);
+            
+            tarjetas.appendChild(divContenedor);
+
 
             img.src = productos[i].img;
             nomProducto.innerText = productos[i].nombre;
             precProducto.innerText = productos[i].precio + " €";
-            botonAdd.innerText = "Añadir";
+            botonAdd.innerText = "Añadir +";
+
+            cantProducto.addEventListener("input", (event))
+
+            botonAdd.addEventListener ("click", () => {var insertCesta = new Cesta (this.#productosDisponibles, this.#productosDisponibles[i].id, this.#productosDisponibles[i].nombre)})
           }
         }
       }
@@ -219,9 +243,7 @@
                   <th scope="col">Subtotal</th>
                 </tr>
               </thead>
-              <tbody id="table-body">
-
-              </tbody>
+              <tbody id="table-body"></tbody>
             </table>
           </div>
         </div>
