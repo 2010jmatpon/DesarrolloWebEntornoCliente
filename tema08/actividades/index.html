@@ -162,7 +162,7 @@
             precProducto.innerText = productos[i].precio + " €";
             botonAdd.innerText = "Añadir +";
 
-            cantProducto.addEventListener("input", (event))
+            cantProducto.addEventListener("input", (event) => {this.#productosDisponibles[i].cantidad = event.target.value});
 
             botonAdd.addEventListener ("click", () => {var insertCesta = new Cesta (this.#productosDisponibles, this.#productosDisponibles[i].id, this.#productosDisponibles[i].nombre)})
           }
