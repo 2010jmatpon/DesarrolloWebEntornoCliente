@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cesta</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+    <style>
+      .header {
+        padding: 50px;
+        background-color: black;
+      }
+      .card-img {
+        padding: 5px;
+        width: 50%;
+        align-self: center;
+      }
+
+      .card-body {
+        border: 1px;
+        border-radius: 5px;
+        background-color: orangered;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: (2, 1fr);
+      }
+
+      #col1 {
+        grid-column: 0/1;
+      }
+      #col2 {
+        grid-column: 1/2;
+      }
+
+      /* .tdSub {
+        white-space: nowrap;
+      } */
+
+      #idContProductos {
+        padding-top: 10px;
+      }
+    </style>
+    <script>
+      class Producto {
+        //Declaro los atributos del producto
+        #id;
+        #nombre;
+        #cantidad;
+        #precio;
+        #imagen;
+        //Creo el constructor del producto
+        constructor(id, nombre, precio, imagen, cantidad) {
+          this.#id = id;
+          this.#nombre = nombre;
+          this.#precio = precio;
+          this.#imagen = imagen;
+          this.#cantidad = cantidad;
+        }
+      }
+
+      class Cesta {
+        //Declaro los atributos de la clase cesta
+        #productosDisponibles;
+        #idProducto;
+        #cantidadProducto;
+
+        #total = 0;
+        #subtotalTotal = 0;
+        #totalConIVA = 0;
+
+        //Creo el constructor y llamo al método ver cesta
+        constructor(productos, id, cantidad) {
+          this.#productosDisponibles = productos;
+          this.#idProducto = id;
+          this.#cantidadProducto = cantidad;
+
+          this.#verCesta();
+        }
+
+        eliminarProducto(id) {
+          // Eliminar el producto de la cesta según su ID
+          var lineasCesta = document.querySelectorAll(".tr-producto");
+          lineasCesta.forEach((linea) => {
+            if (linea.firstChild.innerText === id.toString()) {
+              linea.remove();
+            }
+          });
+
+          // Actualizar los totales después de eliminar el producto
+          this.#actualizarTotales();
+        }
+
+        #actualizarTotales() {
+            //guardo los totales
+          localStorage.setItem(
+            "productos",
+            JSON.stringify(this.#productosDisponibles)
+          );
+          // Obtengo elementos 'tdSub' donde están contenidos los subtotales
+          var subtotals = document.querySelectorAll(".tdSub");
+
+          // Inicializo a 0 el total de subtotales
+          this.#subtotalTotal = 0;
+
+          // Sumo los subtotales de cada una de las lineas de la cesta
+          subtotals.forEach((subtotalElement) => {
+            this.#subtotalTotal += parseFloat(subtotalElement.textContent);
+          });
+
+          // Actualizo el total
+          this.#total = this.#subtotalTotal;
+
+          // Calculo el total + IVA
+          this.#totalConIVA = this.#total * 1.21;
+
+          // Actualizo los valores
+          var totalElement = document.getElementById("total");
+          var totalConIVAElement = document.getElementById("totalConIVA");
+
+          //Doy formato a los valores para que añada 2 números decimales
+          if (totalElement) {
+            totalElement.textContent = this.#total.toFixed(2) + " €";
+          }
+
+          //Igual para el total con el iva
+          if (totalConIVAElement) {
+            totalConIVAElement.textContent =
+              this.#totalConIVA.toFixed(2) + " €";
+          }
+        }
+
+        #verCesta() {
+          //Obtengo por el id el cuerpo  de la tabla
+          var lineasCesta = document.getElementById("table-body");
+
+          //Bucle for para que se realice lo que quiero en funcion de la longitud del array de productos disponibles
+          for (var i = 0; i < this.#productosDisponibles.length; i++) {
+            if (this.#productosDisponibles[i].id == this.#idProducto) {
+              //Creo los elementos para añadir los registros a la tabla
+              var tr1 = document.createElement("tr");
+              var tdCod = document.createElement("td");
+              var tdNom = document.createElement("td");
+              var tdCant = document.createElement("td");
+              var tdPre = document.createElement("td");
+              var tdSub = document.createElement("td");
+
+              //Le asigno clases a los elementos creados previamente
+              tr1.className = "tr-producto";
+              tdCod.className = "tdCod";
+              tdNom.className = "tdNom";
+              tdCant.className = "tdCant";
+              tdPre.className = "tdPre";
+              tdSub.className = "tdSub";
+
+              //Le asigno los valores a cada elemento que previamente creé
+              tdCod.innerText = this.#productosDisponibles[i].id;
+              tdNom.innerText = this.#productosDisponibles[i].nombre;
+              tdCant.innerText = this.#cantidadProducto;
+              tdPre.innerText = this.#productosDisponibles[i].precio.toFixed(2);
+              tdSub.innerText = (
+                this.#productosDisponibles[i].precio * this.#cantidadProducto
+              ).toFixed(2);
+
+              //Organizo los elementos
+              tr1.appendChild(tdCod);
+              tr1.appendChild(tdNom);
+              tr1.appendChild(tdCant);
+              tr1.appendChild(tdPre);
+              tr1.appendChild(tdSub);
+              lineasCesta.appendChild(tr1);
+
+              //Creo un botón para eliminar el registro que quiera
+              var tdEliminar = document.createElement("td");
+              var botonEliminar = document.createElement("button");
+              botonEliminar.className = "btn btn-danger";
+              botonEliminar.innerText = "X";
+              botonEliminar.addEventListener("click", () => {
+                // Obtengo el ID del producto que quiero eliminar
+                var idProducto = parseInt(tdCod.innerText);
+                // Llamo al método eliminarProducto que cree anteriormente con el ID del producto que deseo eliminar
+                this.eliminarProducto(idProducto);
+              });
+              tdEliminar.appendChild(botonEliminar);
+              tr1.appendChild(tdEliminar);
+            }
+          }
+
+          //Llamo al metodo que actualiza los totales para que se muestre bajo la cesta
+          this.#actualizarTotales();
+
+          //Guardo los datos de las columnas
+          localStorage.setItem(
+            "productos",
+            JSON.stringify(this.#productosDisponibles)
+          );
+        }
+
+        guardarLocalStorage() {
+          // Obtengo los productos desde localStorage
+          let productosGuardados = localStorage.getItem("productos");
+
+          // Compruebo productos existentes en localStorage
+          if (productosGuardados) {
+            // Convierto cadena JSON a un array de productos
+            productos = JSON.parse(productosGuardados);
+
+            // Muestro los productos
+            new ContProductos(productos);
+          }
+        }
+      }
+
+      class ContProductos {
+        //Declaro los atributos de la clase ContProductos
+        #productosDisponibles;
+
+        //Creo el constructor y llamo al método mostrarProductos
+        constructor(productos) {
+          this.#productosDisponibles = productos;
+          this.#mostrarProductos();
+        }
+
+        #mostrarProductos() {
+          //Obtengo por el id el div que contiene los productos que hay disponibles
+          var tarjetas = document.getElementById("idContProductos");
+
+          //Creo un nuevo Contenedor y le doy estilo
+          var divContenedor = document.createElement("div");
+          divContenedor.className = "card-group";
+          divContenedor.style =
+            "display: grid; grid-template-columns: 1fr 1fr 1fr";
+
+          //Bucle for para que se realice lo que quiero en funcion de la longitud del array de productos
+          for (var i = 0; i < productos.length; i++) {
+            //Creo los elementos para añadir los registros al catalogo de productos
+            var div1 = document.createElement("div");
+            var img = document.createElement("img");
+            var div2 = document.createElement("div");
+            var nomProducto = document.createElement("h4");
+            var precProducto = document.createElement("p");
+            var div3 = document.createElement("div");
+            var cantProducto = document.createElement("input");
+            var botonAdd = document.createElement("a");
+
+            //Le asigno clases a los elementos creados previamente
+            div1.className = "card";
+            div1.style = "width: 18rem;";
+            img.className = "card-img";
+            div2.className = "card-body";
+            nomProducto.className = "card-title";
+            precProducto.className = "card-precio";
+            div3.className = "card-input";
+            cantProducto.className = "class-cantidad";
+            botonAdd.className = "btn btn-dark";
+
+            //Organizo los elementos
+            div3.appendChild(cantProducto);
+            div2.appendChild(nomProducto);
+            div2.appendChild(precProducto);
+            div2.appendChild(div3);
+            div2.appendChild(botonAdd);
+            div1.appendChild(img);
+            div1.appendChild(div2);
+
+            divContenedor.appendChild(div1);
+
+            tarjetas.appendChild(divContenedor);
+
+            //Le asigno los valores a cada elemento que previamente creé
+            img.src = productos[i].img;
+            nomProducto.innerText = productos[i].nombre;
+            precProducto.innerText = productos[i].precio + " €";
+            botonAdd.innerText = "Añadir +";
+            botonAdd.style = "margin-top: 10px";
+
+            cantProducto.type = "number";
+            cantProducto.placeholder = "1";
+
+            let indice = i;
+
+            //Creo un botón para añadir a la cesta el producto que desee
+            botonAdd.addEventListener("click", () => {
+              if (this.#productosDisponibles[indice]) {
+                var cesta = new Cesta(
+                  this.#productosDisponibles,
+                  this.#productosDisponibles[indice].id,
+                  1
+                );
+              } else {
+                console.error(
+                  "Error: Producto no definido en la posición ",
+                  indice
+                );
+              }
+            });
+          }
+        }
+      }
+
+      //Declaro los productos que estarán disponibles
+      var productos = [
+        {
+          id: 1,
+          nombre: "Bolso",
+          precio: 120,
+          img: "https://source.unsplash.com/random/500x500/?bag",
+        },
+        {
+          id: 2,
+          nombre: "Zapatos",
+          precio: 59,
+          img: "https://source.unsplash.com/random/500x500/?shoe",
+        },
+        {
+          id: 3,
+          nombre: "Móvil",
+          precio: 260,
+          img: "https://source.unsplash.com/random/500x500/?phone",
+        },
+        {
+          id: 4,
+          nombre: "Pastel",
+          precio: 18,
+          img: "https://source.unsplash.com/random/500x500/?cake",
+        },
+        {
+          id: 5,
+          nombre: "Lápiz",
+          precio: 2,
+          img: "https://source.unsplash.com/random/500x500/?pencil",
+        },
+        {
+          id: 6,
+          nombre: "Sudadera",
+          precio: 30,
+          img: "https://source.unsplash.com/random/500x500/?hoodie",
+        },
+      ];
+
+      window.onload = () => new ContProductos(productos);
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <br />
+        <h1>
+          <i class="bi bi-cart3" style="color: orangered">Tienda On-Line</i>
+        </h1>
+        <hr />
+      </div>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col" id="col1">
+            <div id="idContProductos"></div>
+          </div>
+          <div class="col" id="col2">
+            <h3><i class="bi bi-basket2-fill"></i>CESTA</h3>
+            <hr />
+            <table class="table">
+              <thead id="table-header">
+                <tr>
+                  <th scope="col">Cod.</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio(€)</th>
+                  <th scope="col">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+
+            <div>
+              <p><strong>Total:</strong> <span id="total">0.00 €</span></p>
+              <p>
+                <strong>Total + IVA (21%):</strong>
+                <span id="totalConIVA">0.00 €</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

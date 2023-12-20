@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cesta</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+    <style>
+      .header {
+        padding: 50px;
+        background-color: black;
+      }
+      .card-img {
+        padding: 5px;
+        width: 50%;
+        align-self: center;
+      }
+
+      .card-body {
+        border: 1px;
+        border-radius: 5px;
+        background-color: orangered;
+      }
+
+      .tdSub {
+        white-space: nowrap;
+      }
+
+      #idContProductos {
+        padding-top: 10px;
+      }
+      
+    </style>
+    <script>
+      class Producto {
+        #id;
+        #nombre;
+        #cantidad;
+        #precio;
+        #imagen;
+        constructor(id, nombre, precio, imagen, cantidad) {
+          this.#id = id;
+          this.#nombre = nombre;
+          this.#precio = precio;
+          this.#imagen = imagen;
+          this.#cantidad = cantidad;
+        }
+      }
+
+      class Cesta {
+        #articulos = [];
+
+        #productosDisponibles;
+        #idProducto;
+        #cantidadProducto;
+
+        #total = 0;
+        #subtotalTotal = 0;
+        #totalConIVA = 0;
+
+        constructor(productos, id, cantidad) {
+          this.#productosDisponibles = productos;
+          this.#idProducto = id;
+          this.#cantidadProducto = cantidad;
+
+          this.#verCesta();
+        }
+
+        #verCesta() {
+          var lineasCesta = document.getElementById("table-body");
+
+          for (var i = 0; i < this.#productosDisponibles.length; i++) {
+            if (this.#productosDisponibles[i].id == this.#idProducto) {
+              var tr1 = document.createElement("tr");
+              var tdCod = document.createElement("td");
+              var tdNom = document.createElement("td");
+              var tdCant = document.createElement("td");
+              var tdPre = document.createElement("td");
+              var tdSub = document.createElement("td");
+
+              tr1.className = "tr-producto";
+              tdCod.className = "tdCod";
+              tdNom.className = "tdNom";
+              tdCant.className = "tdCant";
+              tdPre.className = "tdPre";
+              tdSub.className = "tdSub";
+
+              tdCod.innerText = this.#productosDisponibles[i].id;
+              tdNom.innerText = this.#productosDisponibles[i].nombre;
+              tdCant.innerText = this.#cantidadProducto;
+              tdPre.innerText = this.#productosDisponibles[i].precio.toFixed(2);
+              tdSub.innerText = (
+                this.#productosDisponibles[i].precio * this.#cantidadProducto
+              ).toFixed(2);
+
+              tr1.appendChild(tdCod);
+              tr1.appendChild(tdNom);
+              tr1.appendChild(tdCant);
+              tr1.appendChild(tdPre);
+              tr1.appendChild(tdSub);
+
+              lineasCesta.appendChild(tr1);
+            }
+          }
+
+          this.#actualizarTotales();
+        }
+
+        #actualizarTotales() {
+          // Obtener todos los elementos 'tdSub' que contienen los subtotales
+          var subtotals = document.querySelectorAll(".tdSub");
+
+          // Reiniciar el subtotal total para recalcularlo
+          this.#subtotalTotal = 0;
+
+          // Sumar todos los subtotales de los productos en la cesta
+          subtotals.forEach((subtotalElement) => {
+            this.#subtotalTotal += parseFloat(subtotalElement.textContent);
+          });
+
+          // Actualizar el total
+          this.#total = this.#subtotalTotal;
+
+          // Calcular el total con IVA (sumar un 21% al total)
+          this.#totalConIVA = this.#total * 1.21; // 21% de IVA
+
+          // Mostrar los totales actualizados
+          var totalElement = document.getElementById("total");
+          var totalConIVAElement = document.getElementById("totalConIVA");
+
+          if (totalElement) {
+            totalElement.textContent = this.#total.toFixed(2) + " €";
+          }
+
+          if (totalConIVAElement) {
+            totalConIVAElement.textContent =
+              this.#totalConIVA.toFixed(2) + " €";
+          }
+        }
+      }
+
+      class ContProductos {
+        #productosDisponibles;
+
+        constructor(productos) {
+          this.#productosDisponibles = productos;
+          this.#mostrarProductos();
+        }
+
+        #mostrarProductos() {
+          var tarjetas = document.getElementById("idContProductos");
+          var divContenedor = document.createElement("div");
+          divContenedor.className = "card-group";
+          divContenedor.style =
+            "display: grid; grid-template-columns: 1fr 1fr 1fr";
+
+          for (var i = 0; i < productos.length; i++) {
+            var div1 = document.createElement("div");
+            var img = document.createElement("img");
+            var div2 = document.createElement("div");
+            var nomProducto = document.createElement("h4");
+            var precProducto = document.createElement("p");
+            var div3 = document.createElement("div");
+            var cantProducto = document.createElement("input");
+            var botonAdd = document.createElement("a");
+
+            div1.className = "card";
+            div1.style = "width: 18rem;";
+
+            img.className = "card-img";
+            div2.className = "card-body";
+            nomProducto.className = "card-title";
+            precProducto.className = "card-precio";
+            div3.className = "card-input";
+            cantProducto.className = "class-cantidad";
+            botonAdd.className = "btn btn-dark";
+
+            div3.appendChild(cantProducto);
+            div2.appendChild(nomProducto);
+            div2.appendChild(precProducto);
+            div2.appendChild(div3);
+            div2.appendChild(botonAdd);
+            div1.appendChild(img);
+            div1.appendChild(div2);
+
+            divContenedor.appendChild(div1);
+
+            tarjetas.appendChild(divContenedor);
+
+            img.src = productos[i].img;
+            nomProducto.innerText = productos[i].nombre;
+            precProducto.innerText = productos[i].precio + " €";
+            botonAdd.innerText = "Añadir +";
+
+            cantProducto.type = "number";
+            cantProducto.placeholder = "1";
+
+            let indice = i;
+
+            botonAdd.addEventListener("click", () => {
+              if (this.#productosDisponibles[indice]) {
+                var cesta = new Cesta(
+                  this.#productosDisponibles,
+                  this.#productosDisponibles[indice].id,
+                  1
+                );
+              } else {
+                console.error(
+                  "Error: Producto no definido en la posición ",
+                  indice
+                );
+              }
+            });
+          }
+        }
+      }
+
+      var productos = [
+        {
+          id: 1,
+          nombre: "Bolso",
+          precio: 120,
+          img: "https://source.unsplash.com/random/500x500/?bag",
+        },
+        {
+          id: 2,
+          nombre: "Zapatos",
+          precio: 59,
+          img: "https://source.unsplash.com/random/500x500/?shoe",
+        },
+        {
+          id: 3,
+          nombre: "Móvil",
+          precio: 260,
+          img: "https://source.unsplash.com/random/500x500/?phone",
+        },
+        {
+          id: 4,
+          nombre: "Pastel",
+          precio: 18,
+          img: "https://source.unsplash.com/random/500x500/?cake",
+        },
+        {
+          id: 5,
+          nombre: "Lápiz",
+          precio: 2,
+          img: "https://source.unsplash.com/random/500x500/?pencil",
+        },
+        {
+          id: 6,
+          nombre: "Sudadera",
+          precio: 30,
+          img: "https://source.unsplash.com/random/500x500/?hoodie",
+        },
+      ];
+
+      window.onload = () => new ContProductos(productos);
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <br />
+        <h1>
+          <i class="bi bi-cart3" style="color: orangered">Tienda On-Line</i>
+        </h1>
+        <hr />
+      </div>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col" id="col1">
+            <div id="idContProductos"></div>
+          </div>
+          <div class="col">
+            <h3><i class="bi bi-basket2-fill"></i>CESTA</h3>
+            <hr />
+            <table class="table">
+              <thead id="table-header">
+                <tr>
+                  <th scope="col">Cod.</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio(€)</th>
+                  <th scope="col">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+
+            <!-- Elementos para mostrar subtotal, total y total con IVA -->
+            <div>
+              <!-- <p><strong>Subtotal:</strong> <span id="subtotal">0.00 €</span></p> -->
+              <p><strong>Total:</strong> <span id="total">0.00 €</span></p>
+              <p>
+                <strong>Total con IVA (21%):</strong>
+                <span id="totalConIVA">0.00 €</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
