@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Datos</title>
+
+    <script>
+      class Select {
+
+        constructor(){
+
+        }
+        funAjax() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              var datos = JSON.parse(this.responseText);
+              var selectNombres = document.getElementById("selectNombres");
+
+              for (var i = 0; i < datos.lenght; i++) {
+                var opcion = document.createElement("option");
+                opcion.value = datos[i].id;
+                opcion.textContent = datos[i].nombre;
+                selectNombres.appendChild(opcion);
+              }
+            }
+          };
+          xhttp.open("GET", "datos.php?id=", true);
+          xhttp.send();
+        }
+
+        funTabla(){
+            
+        }
+      }
+    //   window.onload=function(){funAjax('carga', carga)}
+    </script>
+  </head>
+  <body>
+    <h1>Tarea 1 Tema 10</h1>
+
+    <label for="selectNombres">Selecciona un nombre:</label>
+    <select id="selectNombres">
+      <option selected disabled>Selecciona un nombre:</option>
+    </select>
+
+    <div id="detalles"></div>
+  </body>
+</html>
