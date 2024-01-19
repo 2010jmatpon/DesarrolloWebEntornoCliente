@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarea 1 Tema 11</title>
+
+    <script>
+      // function funAjax(url, fun) {
+      //   var xhttp = new XMLHttpRequest();
+      //   xhttp.onreadystatechange = function () {
+      //     if (this.readyState == 4 && this.status == 200) {
+      //       fun(this);
+      //     }
+      //   };
+      //   xhttp.open("GET", url, true);
+      //   xhttp.send();
+
+      // }
+      function funAjax(url, select) {
+        fetch("datos.php?id=")
+          .then((result) => result.json())
+          .then(function (obj) {
+            for (var i = 0; i < obj.length; i++) {
+              var opcion = document.createElement("option");
+              opcion.value = obj[i].id;
+              opcion.textContent = obj[i].nombre;
+              select.appendChild(opcion);
+            }
+            console.log("Select Personas");
+          })
+          .catch((e) => console.log(`Error capturado:  ${e}`));
+      }
+
+      // function funSelect() {
+      // var datos = JSON.parse(xhttp.responseText);
+      // var selectNombres = document.getElementById("selectNombres");
+
+      // for (var i = 0; i < datos.length; i++) {
+      //   var opcion = document.createElement("option");
+      //   opcion.value = datos[i].id;
+      //   opcion.textContent = datos[i].nombre;
+      //   selectNombres.appendChild(opcion);
+      // }
+
+      //   selectNombres.addEventListener("change", function () {
+      //     funAjax(`datos.php?id=${this.value}`, funTabla);
+      //   });
+      // }
+
+      function funTabla() {
+        console.log("Tabla Personas");
+
+        fetch("datos.php?id=")
+          .then((result) => result.json())
+          .then(function (obj) {
+            var detalles = document.getElementById("detalles");
+
+            var tabla = `
+                <tr>
+                <th>ID</th>
+                <td>${obj[0].id}</td>
+                </tr>
+                <tr>
+                <th>Nombre</th>
+                <td>${obj[0].nombre}</td>
+                </tr>
+                <tr>
+                <th>Apellidos</th>
+                <td>${obj[0].apellidos}</td>
+                <tr>
+                <th>Ciudad</th>
+                <td>${obj[0].ciudad}</td>
+                </tr>`;
+            detalles.innerHTML = tabla;
+            detalles.style = "border: 2px solid black";
+          });
+      }
+      function fEvento() {
+        var selectNombres = document.getElementById("selectNombres");
+        funAjax("datos.php?id=", selectNombres);
+
+        // selectNombres.addEventListener("change", function () {
+        //   funTabla;
+        // });
+        selectNombres.addEventListener("change", function () {
+          funAjax( funTabla);
+        });
+      }
+      window.onload = function () {
+        fEvento();
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Tarea 1 Tema 11</h1>
+
+    <label for="selectNombres">Selecciona un nombre:</label>
+    <select id="selectNombres">
+      <option selected disabled>Selecciona un nombre:</option>
+    </select>
+
+    <table id="detalles"></table>
+  </body>
+</html>
