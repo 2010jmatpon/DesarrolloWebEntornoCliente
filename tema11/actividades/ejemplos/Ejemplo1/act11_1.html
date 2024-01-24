@@ -74,7 +74,9 @@
                 </tr>`;
             detalles.innerHTML = tabla;
             detalles.style = "border: 2px solid black";
-          });
+          })
+          .catch((e) => console.log(`Error capturado:  ${e}`));
+
       }
       function fEvento() {
         var selectNombres = document.getElementById("selectNombres");
