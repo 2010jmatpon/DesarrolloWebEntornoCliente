@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarea 1 Tema 10</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    function funSelect(response) {
+      var datos = response;
+
+      var selectNombres = $("#selectNombres");
+
+      for (var i = 0; i < datos.length; i++) {
+        var opcion = $("<option>");
+        opcion.val(datos[i].id);
+        opcion.text(datos[i].nombre);
+        selectNombres.append(opcion);
+      }
+
+      selectNombres.on("change", function () {
+        $.get(`datos.php?id=${$(this).val()}`, funTabla);
+      });
+    }
+
+    function funTabla(datos) {
+      var detalles = $("#detalles");
+
+      var tabla = `
+        <tr>
+          <th>ID</th>
+          <td>${datos[0].id}</td>
+        </tr>
+        <tr>
+          <th>Nombre</th>
+          <td>${datos[0].nombre}</td>
+        </tr>
+        <tr>
+          <th>Apellidos</th>
+          <td>${datos[0].apellidos}</td>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <td>${datos[0].ciudad}</td>
+        </tr>`;
+
+      detalles.html(tabla);
+      detalles.css("border", "2px solid black");
+    }
+
+    $(document).ready(function () {
+      $.get("datos.php?id", funSelect);
+    });
+  </script>
+</head>
+<body>
+  <h1>Tarea 1 Tema 10</h1>
+
+  <label for="selectNombres">Selecciona un nombre:</label>
+  <select id="selectNombres">
+    <option selected disabled>Selecciona un nombre:</option>
+  </select>
+
+  <table id="detalles"></table>
+</body>
+</html>

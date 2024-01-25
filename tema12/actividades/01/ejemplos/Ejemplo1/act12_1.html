@@ -3,32 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tarea 1 Tema 10</title>
-    
-    
+    <title>Tarea 1 Tema 12</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script>
       function funAjax(url, fun) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            fun(this);
+        $.get(url, function (obj) {
+          object = JSON.parse(obj);
+        });
+
+      // var xhttp = new XMLHttpRequest();
+      // xhttp.onreadystatechange = function () {
+      //   if (this.readyState == 4 && this.status == 200) {
+      //     fun(this);
+      //   }
+      // };
+      // xhttp.open("GET", url, true);
+      // xhttp.send();
+       }
+
+      function funSelect() {
+        $.get(url, function (obj) {
+          object = JSON.parse(obj);
+          for (var i = 0; i < object.length; i++) {
+            $("#selectNombres").append(`<option> ${object.nombre} </option>`)
           }
-        };
-        xhttp.open("GET", url, true);
-        xhttp.send();
-      }
+        });
 
-      function funSelect(xhttp) {
-        var datos = JSON.parse(xhttp.responseText);
-        var selectNombres = document.getElementById("selectNombres");
-
-        for (var i = 0; i < datos.length; i++) {
-          var opcion = document.createElement("option");
-          opcion.value = datos[i].id;
-          opcion.textContent = datos[i].nombre;
-          selectNombres.appendChild(opcion);
-        }
+        // var opcion = document.createElement("option");
+        // opcion.value = datos[i].id;
+        // opcion.textContent = datos[i].nombre;
+        // selectNombres.appendChild(opcion);
 
         selectNombres.addEventListener("change", function () {
           funAjax(`datos.php?id=${this.value}`, funTabla);
@@ -57,16 +62,16 @@
                 <td>${datos[0].ciudad}</td>
                 </tr>`;
         detalles.innerHTML = tabla;
-        detalles.style="border: 2px solid black";
+        detalles.style = "border: 2px solid black";
       }
 
-      window.onload = function () {
+      $(document).ready(function () {
         funAjax("datos.php?id", funSelect);
-      };
+      });
     </script>
   </head>
   <body>
-    <h1>Tarea 1 Tema 10</h1>
+    <h1>Tarea 1 Tema 12</h1>
 
     <label for="selectNombres">Selecciona un nombre:</label>
     <select id="selectNombres">
