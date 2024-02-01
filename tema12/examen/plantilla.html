@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(function () {
+        function funAjax(e) {
+          e.preventDefault(); // Para no abandonar la página al enviar formulario.
+
+          //--------- Con Promesas--------------------------------------------------------
+          var url = "archivo.php";       //Declaro la url del archivo desde el cuál se obtendrán los datos
+          var equipo1 = document.getElementById("equipo1");   //Obtengo las id de los imput y se las asigno a estas variables a las que posteriormente le asignaré valores
+          var equipo2 = document.getElementById("equipo2");
+
+          var data = { equipo1: equipo1.value, equipo2: equipo2.value };  //Asigno valores a las variables previamente declaradas
+        //   Realizo la petición Ajax mediante fetch
+          fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then(function (obj) {
+              let datos = document.getElementById("datos");
+              tabla = "";
+            //  Bucle for que recorre el array de objetos
+              for (var i = 0; i < 4; i++) {
+                tabla += `<tr><td>${obj.equipo1[i]}</td><td>${obj.equipo2[i]}</td></tr>`;
+              }
+
+              datos.innerHTML = tabla;
+            });
+          //-------------------------------------------------------------------------------
+
+          // // -------Con jQuery----------------------------------------------------------
+
+            // $.post(
+            //   "archivo.php",
+            //   { equipo1: $("#equipo1").val(), equipo2: $("#equipo2").val() },
+            //   function (obj) {
+            //     obj = JSON.parse(obj);
+            //     tabla = '';
+            //     for (var i = 0; i < 4; i++) {
+            //       console.log(i++);
+            //       tabla += `<tr><td>${obj.equipo1[i]}</td><td>${obj.equipo2[i]}</td></tr>`
+            //       $("#datos").append(
+            //         tabla
+            //       );
+            //     }
+            //   }
+            // );
+
+          // //----------------------------------------------------------------------------
+        }
+        $("form").submit(funAjax);
+      });
+    </script>
+  </head>
+  <body>
+    <form>
+      <label>ID_Equipo1:</label
+      ><input type="number" min="1" id="equipo1" required="required" />
+      <label>ID_Equipo2:</label
+      ><input type="number" min="1" id="equipo2" required="required" />
+      <button type="submit">Enviar</button>
+    </form>
+    <br />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Equipo1</th>
+          <th>Equipo2</th>
+        </tr>
+      </thead>
+      <tbody id="datos"></tbody>
+    </table>
+  </body>
+</html>
