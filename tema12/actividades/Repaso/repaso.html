@@ -7,21 +7,68 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script>
-      function funAjax() {
-        fetch("carteras.json")
-          .then((result) => result.json())
-          .then((obJson) => console.log(obJson[0].nombre))
-          .catch((e) => console.log(`Error capturado:  ${e}`));
-      }
+    //PROMESAS
+        $(function(){
+            var url = "carteras.json"
+         fetch(url)
+           .then((result) => result.json())
+           .then(function (obj) {
+             let lista = document.getElementById("lista");
+             let tabla = `<tr><td>ID</td><td>NOMBRE</td><td>COSTES</td></tr>`;
+             var total = 0;
+             var subtotal = 0;
+
+             for (var i of obj){
+                tabla += `<tr><th>${i.id}</th><th>${i.nombre}</th><td></td> </tr>`;
+                for (var j in i.costes){
+                    tabla += `<tr><td></td><td>${j}</td><td>${i.costes[j]}</td></tr>`;
+                    subtotal += i.costes[j];
+                }
+                tabla += `<tr><td></td><th>Subtotal</th><th>${subtotal.toFixed(2)}</th></tr>`;
+                total += subtotal;
+                subtotal = 0;
+            }
+            tabla += `<tr><td></td><th>Total</th><th>${total}</th></tr>`;
+            lista.innerHTML = tabla;
+
+           })
+           .catch((e) => console.log(`Error capturado:  ${e}`));
+       });
+
+    //JQUERY
+    // $(function(){
+    //   var url = "carteras.json";
+    //   $.ajax({
+    //     url: url,
+    //     dataType: 'json',
+    //     success: function(obj) {
+    //       let lista = $("#lista");
+    //       let tabla = `<tr><td>ID</td><td>NOMBRE</td><td>COSTES</td></tr>`;
+    //       var total = 0;
+    //       var subtotal = 0;
+
+    //       $.each(obj, function(index, i) {
+    //         tabla += `<tr><th>${i.id}</th><th>${i.nombre}</th><td></td> </tr>`;
+    //         $.each(i.costes, function(j, costo) {
+    //           tabla += `<tr><td></td><td>${j}</td><td>${costo}</td></tr>`;
+    //           subtotal += costo;
+    //         });
+    //         tabla += `<tr><td></td><th>Subtotal</th><th>${subtotal.toFixed(2)}</th></tr>`;
+    //         total += subtotal;
+    //         subtotal = 0;
+    //       });
+
+    //       tabla += `<tr><td></td><th>Total</th><th>${total}</th></tr>`;
+    //       lista.html(tabla);
+    //     },
+    //     error: function(e) {
+    //       console.log(`Error capturado: ${e}`);
+    //     }
+    //   });
+    // });
     </script>
   </head>
   <body>
-    <table>
-      <tr>
-        <td>ID</td>
-        <td>NOMBRE</td>
-        <td>COSTE €</td>
-      </tr>
-    </table>
+    <table id="lista" border="2"></table>
   </body>
 </html>
