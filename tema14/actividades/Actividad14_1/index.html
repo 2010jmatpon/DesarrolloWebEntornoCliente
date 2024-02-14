@@ -8,15 +8,19 @@
 
     <script>
       $(function () {
-        $("#add").on("click", function () {
+        $("#boton").on("click", function () {
           fetch("http://localhost:3000/ajax")
-          .then((result) => result.json());
+          .then((result) => result.json())
+          .then(data =>{
+            $("#resultado").html(`${data.Titulo}, ${data.Autor}`)
+          })
         });
       });
     </script>
   </head>
   <body>
     <h1>Index.html leído</h1>
-    <button>Pulsar</button>
+    <button id="boton" type="button">Pulsar</button>
+    <div id="resultado"></div>
   </body>
 </html>
