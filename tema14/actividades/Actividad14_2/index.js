@@ -1,20 +1,27 @@
-//Para la conexión sql
+import express from "express";
+import path from 'path';
 
 import { MongoClient } from "mongodb";
 const uri =
-  "mongodb+srv://jmatpon2010:<password>@ges-dwec.bfpkavj.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://jmatpon2010:<pass>@ges-dwec.bfpkavj.mongodb.net/?retryWrites=true&w=majority";
+const app = express();
+const router = express.Router();
+var __dirname = path.resolve(); 
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(
-//   uri
-  //     {
-  //   serverApi: {
-  //     version: ServerApiVersion.v1,
-  //     strict: true,
-  //     deprecationErrors: true,
-  //   }
-  // }
-// );
+router.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + "/index.html"));
+});
+app.use(express.json());
+
+router.post("/ajax", async function (req, res) {
+  console.log(req.body);
+  const registro ={
+    nombre: req.body.nombre,
+    apellido: req.body.apellido
+  }
+  const result = await run(registro);
+  res.json(result);
+});
 
 async function run(registro) {
   const client = new MongoClient(uri);
@@ -23,24 +30,21 @@ async function run(registro) {
     const database = client.db("Tarea2-Tema14");
     const datos = database.collection("Persona");
 
-    // if (registro.nombre != "") await datos.insertOne(registro);
+    if (registro.nombre != "") await datos.insertOne(registro);
     const queryAll = datos.find();
     const allValues = await queryAll.toArray();
     console.log(allValues);
     return allValues;
   } catch (error) {
     console.log(error.message);
-    // }
-    // Connect the client to the server	(optional starting in v4.7)
 
-    // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 1 });
-    // console.log(
-    //   "Pinged your deployment. You successfully connected to MongoDB!"
-    // );
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
+
 run().catch(console.dir);
+
+app.use("/", router);
+app.listen(3000);
+console.log("Escuchando en puerto 3000");

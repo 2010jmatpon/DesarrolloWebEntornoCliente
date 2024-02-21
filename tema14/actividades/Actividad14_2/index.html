@@ -5,33 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="index.js"></script>
-    <script>
-       $(function () {
-      function funAjax(e) {
-        e.preventDefault();
-        var nombre = $("#nombre").val();
-        var apellido = $("#apellido").val();
-        var data = { nombre, apellido };
-        
-        $.ajax({
-          type: "POST",
-          url: "/ajax",
-          data: JSON.stringify(data),
-          contentType: "application/json",
-          success: function (obj) {
-            document.getElementById(
-              "datos"
-            ).innerHTML = `<tr> <th> Nombre </th> <th> Apellido </th></tr>
-                           <tr> <td>${obj.nombre} </td> <td>${obj.apellido} </td></tr>`;
-          },
-          error: function (error) {
-            console.error("Error:", error);
-          }
-        });
+    <style>
+      table, th, td{
+        border: 1px solid black;
       }
-      $("form").submit(funAjax);
-    });
+    </style>
+    <script>
+      $(function () {
+        function funAjax(e) {
+          e.preventDefault();
+          var nombre = $("#nombre").val();
+          var apellido = $("#apellido").val();
+          var data = { nombre, apellido };
+          $.ajax({
+            type: "POST",
+            url: "/ajax",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (data) {
+              var tableHtml = `<tr> <th> Nombre </th> <th> Apellido </th></tr>`;
+              data.forEach(function (obj) {
+                tableHtml += `<tr> <td>${obj.nombre} </td> <td>${obj.apellido} </td></tr>`;
+              });
+              $("#datos").html(tableHtml);
+            },
+            error: function (error) {
+              console.error("Error:", error);
+            },
+          });
+        }
+        $("form").submit(funAjax);
+      });
     </script>
   </head>
   <body>
